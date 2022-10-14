@@ -1,0 +1,37 @@
+.navbar-bottom {
+    padding: 10px 20px;
+    border-top: 1px solid rgb(216, 216, 216);
+}
+.text-decoration-none{
+    text-decoration: none;
+}
+
+.navbar-bottom-shadow {
+    box-shadow: -1px -8px 5px 0px rgba(219, 208, 208, 0.71);
+    -webkit-box-shadow: -1px -8px 5px 0px rgba(219, 208, 208, 0.71);
+    -moz-box-shadow: -1px -8px 5px 0px rgba(219, 208, 208, 0.71);
+}
+
+.content-navbar-bottom {
+    width: 100%;
+}
+
+.link-navbar-bottom a {
+    text-decoration: none;
+    color: #111;
+}
+
+.link-navbar-bottom:hover {
+    text-decoration: underline;
+}
+
+.link-navbar-bottom.active {
+    background-color: rgba(122, 184, 255, 0.605);
+    border-radius: 10px;
+}
+
+.service-icon {
+    border: 1px solid rgb(216, 216, 216);
+    padding: 20px;
+    border-radius: 10px;
+}
