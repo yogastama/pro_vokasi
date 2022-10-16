@@ -23,7 +23,7 @@
                                 <div class="col-12 col-sm-4">
                                     <div class="navbar-app">
                                         <div class="row">
-                                            <div class="col-12 text-center font-roboto-slab title-app">
+                                            <div class="col-12 text-center font-inter title-app">
                                                 PRO-VOKASI APP
                                             </div>
                                             <div class="col-12 mt-2">
