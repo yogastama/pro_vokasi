@@ -21,7 +21,7 @@ class HomeController extends Controller
     }
     public function events(Request $request)
     {
-        $events = new EventModel();
+        $events = EventModel::with('category_event');
         if ($request->get('search')) {
             $events = $events->where('title', 'like', '%' . $request->get('search') . '%');
         }

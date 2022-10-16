@@ -49,6 +49,9 @@
                                     <div class="badge text-bg-warning" style="font-size: 10px">
                                         {{ ucwords($event->type_event) }}
                                     </div>
+                                    <div class="badge text-bg-info" style="font-size: 10px">
+                                        {{ ucwords($event->category_event->title) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
