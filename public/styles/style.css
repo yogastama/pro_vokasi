@@ -42,10 +42,12 @@
     width: 100%;
     padding: 10px;
     background-color: #FE3E3F;
-    color: #fff;
-    font-size: 20px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+.navbar-app .title-app{
+    color: #fff;
+    font-size: 20px;
 }
 .font-roboto-slab{
     font-family: 'Roboto Slab', serif;

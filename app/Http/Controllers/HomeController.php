@@ -19,9 +19,13 @@ class HomeController extends Controller
         ];
         return view('home.index', $data);
     }
-    public function events()
+    public function events(Request $request)
     {
-        $events = EventModel::all();
+        $events = new EventModel();
+        if ($request->get('search')) {
+            $events = $events->where('title', 'like', '%' . $request->get('search') . '%');
+        }
+        $events = $events->where('is_active', 'active')->get();
         $data = [
             'events' => $events
         ];

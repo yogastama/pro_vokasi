@@ -3,7 +3,7 @@
 ])
 
 @section('content')
-<div class="row" style="margin-top: 80px;margin-left:0px;margin-right:0px;padding-bottom: 100px;">
+<div class="row" style="margin-top: 120px;margin-left:0px;margin-right:0px;padding-bottom: 100px;">
     <div class="col-12 px-4">
         <h3>
             {{ $event->title }}

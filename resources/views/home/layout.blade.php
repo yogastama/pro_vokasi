@@ -21,14 +21,15 @@
                         <div class="container-fluid">
                             <div class="row justify-content-center">
                                 <div class="col-12 col-sm-4">
-                                    <div class="navbar-app text-center font-roboto-slab">
+                                    <div class="navbar-app">
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-12 text-center font-roboto-slab title-app">
                                                 PRO-VOKASI APP
                                             </div>
                                             <div class="col-12 mt-2">
                                                 <img src="{{ url('/images/others/kerjasama.png') }}" alt="kerjasama" width="100%" class="rounded">
                                             </div>
+                                            @yield('content_navbar_top')
                                         </div>
                                     </div>
                                 </div>

@@ -2,14 +2,32 @@
     'menu' => 'events'
 ])
 
+
 @section('content')
-<div class="row" style="margin-top: 80px;margin-left:0px;margin-right:0px;padding-bottom: 100px;">
+<div class="row" style="margin-top: 130px;margin-left:0px;margin-right:0px;padding-bottom: 100px;">
     <div class="col-12 px-4">
         <b>
             EVENT TERSEDIA
         </b>
     </div>
     <div class="row mt-3">
+        <div class="col-10 ps-4">
+            <form action="{{ route('event.index') }}" method="GET">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Cari event..." name="search" value="{{ request()->get('search') }}">
+                </div>
+                @if (request()->get('search'))
+                    <small class="text-muted">Hasil pencarian "{{ request()->get('search') }}" ditemukan {{ count($events) }} event</small>
+                @endif
+            </form>
+        </div>
+        <div class="col-2 pe-4">
+            <div class="d-grid gap-2">
+                <div class="btn btn-primary">
+                    <i class="fa-solid fa-search"></i>
+                </div>
+            </div>
+        </div>
         <div class="col-12 px-4">
             <div class="row">
                 @foreach ($events as $event)

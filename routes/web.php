@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::group(['prefix' => 'events'], function () {
-    Route::get('/', [HomeController::class, 'events']);
+    Route::get('/', [HomeController::class, 'events'])->name('event.index');
     Route::get('/{id}', [HomeController::class, 'show_event'])->name('event.show');
     Route::get('/register/{id}', [HomeController::class, 'register_event'])->name('event.register');
 });
