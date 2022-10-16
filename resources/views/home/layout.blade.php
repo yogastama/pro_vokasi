@@ -17,46 +17,59 @@
         <div class="row justify-content-center">
             <div class="col-12 col-sm-4 p-0">
                 <div class="wrapper-content">
-                    <nav class="navbar fixed-top bg-light shadow-sm">
+                    <nav class="fixed-top">
                         <div class="container-fluid">
-                            <a class="navbar-brand" href="#">
-                                <img src="{{ url('/images/logo/logo.png') }}" alt="Logo" width="30"
-                                    class="d-inline-block align-text-top rounded-circle">
-                                Pro-Vokasi
-                            </a>
-                        </div>
-                    </nav>
-                    @yield('content')
-                    <nav class="navbar-bottom-shadow fixed-bottom navbar-bottom bg-light shadow">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-4 text-center link-navbar-bottom {{ $menu == 'home' ? 'active' : ''  }}">
-                                    <a href="{{ url('/') }}">
-                                        <img src="{{ url('/icons/home.svg') }}" alt="home">
-                                        <div>
-                                            Home
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-sm-4">
+                                    <div class="navbar-app text-center font-roboto-slab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                PRO-VOKASI APP
+                                            </div>
+                                            <div class="col-12 mt-2">
+                                                <img src="{{ url('/images/others/kerjasama.png') }}" alt="kerjasama" width="100%" class="rounded">
+                                            </div>
                                         </div>
-                                    </a>
-                                </div>
-                                <div class="col-4 text-center link-navbar-bottom {{ $menu == 'events' ? 'active' : ''  }}">
-                                    <a href="{{ url('/events') }}">
-                                        <img src="{{ url('/icons/event.svg') }}" alt="home">
-                                        <div>
-                                            Events
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-4 text-center link-navbar-bottom {{ $menu == 'account' ? 'active' : ''  }}">
-                                    <a href="">
-                                        <img src="{{ url('/icons/person.svg') }}" alt="home">
-                                        <div>
-                                            Account
-                                        </div>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </nav>
+                    @yield('content')
+                    <div class="fixed-bottom">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-sm-4">
+                                <div class="navbar-bottom-app">
+                                    <div class="row">
+                                        <div class="col-4 py-1 text-center link-navbar-bottom {{ $menu == 'home' ? 'active' : ''  }}">
+                                            <a href="{{ url('/') }}">
+                                                <img src="{{ url('/icons/home.svg') }}" alt="home" width="20px">
+                                                <div style="font-size: 14px">
+                                                    Home
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 py-1 text-center link-navbar-bottom {{ $menu == 'events' ? 'active' : ''  }}">
+                                            <a href="{{ url('/events') }}">
+                                                <img src="{{ url('/icons/event.svg') }}" alt="home" width="20px">
+                                                <div style="font-size: 14px">
+                                                    Events
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 py-1 text-center link-navbar-bottom {{ $menu == 'account' ? 'active' : ''  }}">
+                                            <a href="">
+                                                <img src="{{ url('/icons/person.svg') }}" alt="home" width="20px">
+                                                <div style="font-size: 14px">
+                                                    Account
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

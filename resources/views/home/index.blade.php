@@ -1,67 +1,53 @@
 @extends('home.layout', [
-    'menu' => 'home'
+'menu' => 'home'
 ])
 
 @section('content')
-<div class="row" style="margin-top: 80px;margin-left:0px;margin-right:0px">
-    <div class="col-12 px-4">
+<div class="row" style="margin-top: 100px;margin-left:0px;margin-right:0px">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+        <div class="carousel-indicators">
+            @foreach ($sliders as $slider)
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $loop->iteration }}"
+                class="{{ $loop->iteration == 1 ? 'active' : '' }}" aria-current="true"
+                aria-label="{{ $slider->title }}"></button>
+            @endforeach
+        </div>
+        <div class="carousel-inner">
+            @foreach ($sliders as $slider)
+            <div class="carousel-item {{ $loop->iteration == 1 ? 'active' : '' }}">
+                <img src="{{ url('/storage/' . $slider->image) }}" class="d-block w-100" alt="...">
+            </div>
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="col-12 px-4 mt-3">
         <b>
-            LAYANAN
+            PRO-VOKASI
         </b>
     </div>
-    <div class="row mt-3">
-        <div class="col-12 px-4">
-            <div class="row">
-                <div class="col-6 mt-3 text-center">
-                    <a href="https://siva.kemenperin.go.id" class="text-decoration-none">
-                        <div class="service-icon">
-                            <div style="height: 100px;">
-                                <img src="{{ url('/images/others/siva.png') }}" alt="siva" width="100%">
-                            </div>
-                            <div>
-                                <small class="text-muted">SIVA</small>
-                            </div>
-                        </div>
-                    </a>
+    <div class="row mt-3" style="margin: 0">
+        @foreach ($provokasi_services as $item)
+        <div class="col-6">
+            <a href="{{ route('pro_vokasi.show', ['id' => $item->id]) }}" class="anchor-provokasi">
+                <div class="card" style="width: 100%;">
+                    <img src="{{ url('/storage/' . $item->banner) }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text" style="font-size: 12px">Pelatihan Cost and Benefit Analysis / Analisa Biaya dan Manfaat</p>
+                    </div>
                 </div>
-                <div class="col-6 mt-3 text-center">
-                    <a href="https://cdcbpsdmi.kemenperin.go.id/" class="text-decoration-none">
-                        <div class="service-icon">
-                            <div style="height: 100px;">
-                                <img src="{{ url('/images/others/cdc.png') }}" alt="siva" width="100%">
-                            </div>
-                            <div>
-                                <small class="text-muted">CDC</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 mt-3 text-center">
-                    <a href="https://jarvis.kemenperin.go.id/" class="text-decoration-none">
-                        <div class="service-icon">
-                            <div style="height: 100px;">
-                                <img src="{{ url('/images/others/jarvis.png') }}" alt="siva" width="100%">
-                            </div>
-                            <div>
-                                <small class="text-muted">JARVIS</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 mt-3 text-center">
-                    <a href="https://coachingclinicstd.kemenperin.go.id/" class="text-decoration-none">
-                        <div class="service-icon">
-                            <div style="height: 100px;">
-                                <img src="{{ url('/images/others/std.png') }}" alt="siva" width="100%" class="rounded">
-                            </div>
-                            <div>
-                                <small class="text-muted">COACHING</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            </a>
         </div>
+        @endforeach
     </div>
 </div>
 @endsection

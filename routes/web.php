@@ -15,9 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/events', [HomeController::class, 'events']);
-Route::get('/events/{id}', [HomeController::class, 'show_event'])->name('event.show');
-Route::get('/events/register/{id}', [HomeController::class, 'register_event'])->name('event.register');
+Route::group(['prefix' => 'events'], function () {
+    Route::get('/', [HomeController::class, 'events']);
+    Route::get('/{id}', [HomeController::class, 'show_event'])->name('event.show');
+    Route::get('/register/{id}', [HomeController::class, 'register_event'])->name('event.register');
+});
+Route::group(['prefix' => 'pro_vokasi'], function () {
+    Route::get('/{id}', [HomeController::class, 'show_pro_vokasi'])->name('pro_vokasi.show');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

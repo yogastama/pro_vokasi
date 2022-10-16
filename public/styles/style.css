@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700&display=swap');
+
 .navbar-bottom {
     padding: 10px 20px;
     border-top: 1px solid rgb(216, 216, 216);
@@ -26,12 +28,33 @@
 }
 
 .link-navbar-bottom.active {
-    background-color: rgba(122, 184, 255, 0.605);
+    background-color: #fe3e3e62;
     border-radius: 10px;
+    padding: 0px 20px;
 }
 
 .service-icon {
     border: 1px solid rgb(216, 216, 216);
     padding: 20px;
     border-radius: 10px;
+}
+.navbar-app{
+    width: 100%;
+    padding: 10px;
+    background-color: #FE3E3F;
+    color: #fff;
+    font-size: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.font-roboto-slab{
+    font-family: 'Roboto Slab', serif;
+}
+.navbar-bottom-app{
+    padding: 10px 30px;
+    background-color: #eee;
+}
+.anchor-provokasi{
+    text-decoration: none;
+    color: #111;
 }
