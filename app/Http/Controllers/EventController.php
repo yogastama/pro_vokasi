@@ -106,4 +106,13 @@ class EventController extends Controller
         ];
         return view('home.success_register_event', $data);
     }
+    public function is_register_event(Request $request)
+    {
+        $participant = EventParticipantModel::where('event_id', $request->post('event_id'))
+            ->where('email', $request->post('email'))->first();
+        return response()->json([
+            'status' => 'OK',
+            'results' => $participant
+        ]);
+    }
 }

@@ -22,6 +22,7 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/{id}', [EventController::class, 'show'])->name('event.show');
     Route::get('/register/{id}', [EventController::class, 'register'])->name('event.register');
     Route::post('/save_register/{id}', [EventController::class, 'save_register'])->name('event.save_register');
+    Route::post('/is_register_event', [EventController::class, 'is_register_event'])->name('event.is_register_event');
     Route::get('/success_register_event/{id}/{participant_id}', [EventController::class, 'success_register_event'])->name('event.success_register_event');
 });
 Route::group(['prefix' => 'pro_vokasi'], function () {

@@ -35,7 +35,7 @@
                     </div>
                     <small class="text-muted"><span class="badge text-bg-warning">{{ ucwords($event->type_event) }}</span></small>
                     <br>
-                    <div class="d-grid gap-2 mt-3">
+                    <div class="d-grid gap-2 mt-3 btn-wrapper-register">
                         <a href="{{ route('event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-lg">
                             Daftar
                         </a>
@@ -47,4 +47,32 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+    <script>
+        function isRegisterEvent()
+        {
+            $.ajax({
+                type: "post",
+                url: "{{ route('event.is_register_event') }}",
+                data: {
+                    event_id : '{{ $event->id }}',
+                    email : localStorage.getItem('email_siva')
+                },
+                success: function (response) {
+                    if (response.results) {
+                        $('.btn-wrapper-register').html(`
+                            <a href="/events/success_register_event/${response.results.event_id}/${response.results.id}" class="btn btn-dark btn-lg">
+                                Lihat detail pendaftaran saya
+                            </a>
+                        `);
+                    } else {
+                        
+                    }
+                }
+            });
+        }
+        isRegisterEvent();
+    </script>
 @endsection
