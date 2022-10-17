@@ -6,6 +6,7 @@ use App\Models\EventModel;
 use App\Models\ProVokasiServiceModel;
 use App\Models\SliderModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
@@ -19,26 +20,6 @@ class HomeController extends Controller
         ];
         return view('home.index', $data);
     }
-    public function events(Request $request)
-    {
-        $events = EventModel::with('category_event');
-        if ($request->get('search')) {
-            $events = $events->where('title', 'like', '%' . $request->get('search') . '%');
-        }
-        $events = $events->where('is_active', 'active')->get();
-        $data = [
-            'events' => $events
-        ];
-        return view('home.events', $data);
-    }
-    public function show_event($id)
-    {
-        $event = EventModel::with('category_event')->find($id);
-        $data = [
-            'event' => $event
-        ];
-        return view('home.event', $data);
-    }
     public function show_pro_vokasi($id)
     {
         $provokasi = ProVokasiServiceModel::find($id);
@@ -46,13 +27,5 @@ class HomeController extends Controller
             'provokasi' => $provokasi
         ];
         return view('home.pro_vokasi', $data);
-    }
-    public function register_event($id)
-    {
-        $event = EventModel::with('category_event')->find($id);
-        $data = [
-            'event' => $event
-        ];
-        return view('home.register_event', $data);
     }
 }

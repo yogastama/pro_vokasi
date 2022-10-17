@@ -60,3 +60,8 @@
     text-decoration: none;
     color: #111;
 }
+.notie-alert {
+    cursor: pointer;
+    z-index: 99999 !important;
+}
+

@@ -10,6 +10,7 @@
     @laravelPWA
     <link rel="stylesheet" href="{{ url('/styles/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
 </head>
 
 <body>
@@ -59,7 +60,7 @@
                                             </a>
                                         </div>
                                         <div class="col-4 py-1 text-center link-navbar-bottom {{ $menu == 'account' ? 'active' : ''  }}">
-                                            <a href="">
+                                            <a href="{{ url('/accounts/login') }}" class="account-menu">
                                                 <img src="{{ url('/icons/person.svg') }}" alt="home" width="20px">
                                                 <div style="font-size: 14px">
                                                     Account
@@ -78,6 +79,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>  <script src="https://unpkg.com/notie"></script>
+    <script src="https://unpkg.com/notie"></script>
+    <script>
+        if (localStorage.getItem('token_siva')) {
+            $('.account-menu').attr('href', `{{ url('/accounts') }}`);
+        } else {
+            $('.account-menu').attr('href', `{{ url('/accounts/login') }}`);
+        }
+    </script>
+    @yield('javascript')
 </body>
 
 </html>
