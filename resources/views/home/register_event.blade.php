@@ -98,5 +98,20 @@
             $('#token_siva').val(localStorage.getItem('token_siva'));
         }
         renderValueFormEvent();
+        $('#form-participant').submit(function (e) { 
+            if (!localStorage.getItem('name_siva')) {
+                e.preventDefault();
+                notie.alert({
+                    type: 'error',
+                    text: 'Silakan login terlebih dahulu!',
+                    stay: false,
+                    time: 3,
+                    position: 'top'
+                })
+                setTimeout(() => {
+                    window.location = '/accounts/login';
+                }, 2000);
+            }
+        });
     </script>
 @endsection
