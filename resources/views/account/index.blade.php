@@ -14,9 +14,9 @@
     </div>
     <div class="col-12">
         <hr>
-        <a href="" class="btn btn-warning">
+        {{-- <a href="" class="btn btn-warning">
             Edit
-        </a>
+        </a> --}}
         <table class="table table-bordered mt-3">
             <tr>
                 <th>
