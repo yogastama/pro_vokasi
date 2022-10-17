@@ -69,7 +69,8 @@ class EventController extends Controller
                     'email' => $user['email'],
                     'phone_number' => $request->post('phone'),
                     'institution' => $user['institution'],
-                    'event_id' => $id
+                    'event_id' => $id,
+                    'institution_type' => $request->post('jenis_instansi')
                 ]);
                 $participant->save();
 

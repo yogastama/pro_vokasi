@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-12 mt-2">
                     <div class="alert alert-warning">
-                        Silakan lengkapi nomor telepon dan jenis kelamin anda di bawah ini.
+                        Silakan lengkapi & cek kembali form di bawah ini.
                     </div>
                 </div>
                 <div class="col-12">
@@ -56,7 +56,18 @@
                             <input type="text" class="form-control" name="email" id="email">
                         </div>
                         <div class="form-group mt-2">
-                            <label for="instansi">Instansi</label>
+                            <label for="jenis_instansi">Jenis Instansi</label>
+                            <select name="jenis_instansi" id="jenis_instansi" class="form-control">
+                                <option value="kementrian">Kementrian/lembaga</option>
+                                <option value="pendidikan_tinggi">Pendidikan tinggi</option>
+                                <option value="smk">SMK</option>
+                                <option value="industri">Industri</option>
+                                <option value="pemerintah_daerah">Pemerintah daerah</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="instansi">Nama Instansi</label>
                             <input type="text" class="form-control" name="instansi" id="instansi">
                         </div>
                         <div class="form-group mt-2">
@@ -93,8 +104,8 @@
             $('#name').attr('readonly', 'true');
             $('#email').val(localStorage.getItem('email_siva'));
             $('#email').attr('readonly', 'true');
-            $('#instansi').val(localStorage.getItem('institution_siva'));
-            $('#instansi').attr('readonly', 'true');
+            // $('#instansi').val(localStorage.getItem('institution_siva'));
+            // $('#instansi').attr('readonly', 'true');
             $('#token_siva').val(localStorage.getItem('token_siva'));
         }
         renderValueFormEvent();
