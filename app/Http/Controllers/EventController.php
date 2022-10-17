@@ -15,7 +15,7 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $events = EventModel::with('category_event');
+        $events = EventModel::has('response_event')->with('category_event');
         if ($request->get('search')) {
             $events = $events->where('title', 'like', '%' . $request->get('search') . '%');
         }
