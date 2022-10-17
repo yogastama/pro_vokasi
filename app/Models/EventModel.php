@@ -14,4 +14,8 @@ class EventModel extends Model
     {
         return $this->hasOne(EventCategoryModel::class, 'id', 'category_event_id');
     }
+    public function response_event()
+    {
+        return $this->hasOne(ResponseEventModel::class, 'event_id', 'id');
+    }
 }

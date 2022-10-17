@@ -36,9 +36,17 @@
             </tr>
             <tr>
                 <th>
-                    Name
+                    Username
                 </th>
                 <td class="account-username">
+
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Institution
+                </th>
+                <td class="account-institution">
 
                 </td>
             </tr>
@@ -57,6 +65,7 @@
     $('.account-name').html(localStorage.getItem('name_siva'));
     $('.account-email').html(localStorage.getItem('email_siva'));
     $('.account-username').html(localStorage.getItem('username_siva'));
+    $('.account-institution').html(localStorage.getItem('institution_siva'));
 
     $('.btn-logout').click(function (e) { 
         e.preventDefault();

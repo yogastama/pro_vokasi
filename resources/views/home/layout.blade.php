@@ -87,6 +87,15 @@
         } else {
             $('.account-menu').attr('href', `{{ url('/accounts/login') }}`);
         }
+        @if(Session::get('alert-type'))
+        notie.alert({
+            type: `{{ Session::get('alert-type') }}`,
+            text: `{{ Session::get('message') }}`,
+            stay: false,
+            time: 3,
+            position: 'top'
+        })
+        @endif
     </script>
     @yield('javascript')
 </body>

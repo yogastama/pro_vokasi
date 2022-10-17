@@ -48,6 +48,7 @@
                         localStorage.setItem("username_siva", response.results.user.username);
                         localStorage.setItem("name_siva", response.results.user.name);
                         localStorage.setItem("token_siva", response.results.token);
+                        localStorage.setItem("institution_siva", response.results.user.institution);
                         notie.alert({
                             type: 'success',
                             text: 'Login berhasil!',
