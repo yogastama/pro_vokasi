@@ -39,7 +39,7 @@
         @foreach ($provokasi_services as $item)
         <div class="col-6">
             <a href="{{ route('pro_vokasi.show', ['id' => $item->id]) }}" class="anchor-provokasi">
-                <div class="card" style="width: 100%;">
+                <div class="card" style="width: 100%;height:200px;">
                     <img src="{{ url('/storage/' . $item->banner) }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <p class="card-text" style="font-size: 12px">{{ $item->name }}</p>
