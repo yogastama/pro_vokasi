@@ -42,7 +42,7 @@
                 <div class="card" style="width: 100%;">
                     <img src="{{ url('/storage/' . $item->banner) }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <p class="card-text" style="font-size: 12px">{{ $item->title }}</p>
+                        <p class="card-text" style="font-size: 12px">{{ $item->name }}</p>
                     </div>
                 </div>
             </a>
