@@ -15,7 +15,9 @@
             <div class="row">
                 <div class="col-12">
                     @if ($provokasi->youtube_video)
-                        
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="100%" class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $provokasi->youtube_video  }}" allowfullscreen></iframe>
+                    </div>
                     @else
                         <img src="{{ url('/storage/' . $provokasi->banner) }}" alt="" width="100%">
                     @endif
