@@ -3,7 +3,7 @@
 ])
 
 @section('content')
-<div class="row" style="margin-top: 100px;margin-left:0px;margin-right:0px">
+<div class="row" style="margin-top: 100px;margin-left:0px;margin-right:0px;padding-bottom:100px;">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
         <div class="carousel-indicators">
             @foreach ($sliders as $slider)
