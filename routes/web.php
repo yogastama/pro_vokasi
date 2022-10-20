@@ -17,31 +17,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [IvwHomeController::class, 'index']);
-Route::get('/show/{id}', [IvwHomeController::class, 'show'])->name('ivw.show');
-Route::get('/event/{id}', [IvwHomeController::class, 'event'])->name('ivw.event.show');
-Route::get('/event/register/{id}', [IvwHomeController::class, 'register_event'])->name('ivw.event.register');
+Route::group(['prefix' => 'desktop'], function () {
+    Route::get('/', [IvwHomeController::class, 'index']);
+    Route::get('/show/{id}', [IvwHomeController::class, 'show'])->name('ivw.show');
+    Route::get('/event/{id}', [IvwHomeController::class, 'event'])->name('ivw.event.show');
+    Route::get('/event/register/{id}', [IvwHomeController::class, 'register_event'])->name('ivw.event.register');
+});
 
-Route::group(['prefix' => 'mobile'], function () {
-    Route::get('/', [HomeController::class, 'index']);
-    Route::group(['prefix' => 'events'], function () {
-        Route::get('/', [EventController::class, 'index'])->name('event.index');
-        Route::get('/{id}', [EventController::class, 'show'])->name('event.show');
-        Route::get('/register/{id}', [EventController::class, 'register'])->name('event.register');
-        Route::post('/save_register/{id}', [EventController::class, 'save_register'])->name('event.save_register');
-        Route::post('/is_register_event', [EventController::class, 'is_register_event'])->name('event.is_register_event');
-        Route::get('/success_register_event/{id}/{participant_id}', [EventController::class, 'success_register_event'])->name('event.success_register_event');
-    });
-    Route::group(['prefix' => 'pro_vokasi'], function () {
-        Route::get('/{id}', [HomeController::class, 'show_pro_vokasi'])->name('pro_vokasi.show');
-    });
-    Route::group(['prefix' => 'accounts'], function () {
-        Route::get('/', [AccountController::class, 'index']);
-        Route::get('/login', [AccountController::class, 'login']);
-        Route::get('/register', [AccountController::class, 'register']);
-        Route::post('/process_login', [AccountController::class, 'process_login'])->name('accounts.process_login');
-        Route::post('/process_register', [AccountController::class, 'process_register'])->name('accounts.process_register');
-    });
+Route::get('/',  function () {
+    $agent = new \Jenssegers\Agent\Agent;
+
+    $result = $agent->isMobile();
+    if ($result) {
+        return [HomeController::class, 'index'];
+    } else {
+        return redirect()->to('/desktop');
+    }
+});
+Route::group(['prefix' => 'events'], function () {
+    Route::get('/', [EventController::class, 'index'])->name('event.index');
+    Route::get('/{id}', [EventController::class, 'show'])->name('event.show');
+    Route::get('/register/{id}', [EventController::class, 'register'])->name('event.register');
+    Route::post('/save_register/{id}', [EventController::class, 'save_register'])->name('event.save_register');
+    Route::post('/is_register_event', [EventController::class, 'is_register_event'])->name('event.is_register_event');
+    Route::get('/success_register_event/{id}/{participant_id}', [EventController::class, 'success_register_event'])->name('event.success_register_event');
+});
+Route::group(['prefix' => 'pro_vokasi'], function () {
+    Route::get('/{id}', [HomeController::class, 'show_pro_vokasi'])->name('pro_vokasi.show');
+});
+Route::group(['prefix' => 'accounts'], function () {
+    Route::get('/', [AccountController::class, 'index']);
+    Route::get('/login', [AccountController::class, 'login']);
+    Route::get('/register', [AccountController::class, 'register']);
+    Route::post('/process_login', [AccountController::class, 'process_login'])->name('accounts.process_login');
+    Route::post('/process_register', [AccountController::class, 'process_register'])->name('accounts.process_register');
 });
 
 
