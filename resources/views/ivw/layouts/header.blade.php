@@ -24,6 +24,9 @@
     </a>
 </div>
 <div class="subheader">
+    <a href="{{ route('ivw.events') }}"
+        style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
+                style="width:20px;margin-top:-3px;"> Event Kemenperin</span></a>
     <a href="{{ route('ivw.register') }}"
         style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
                 style="width:20px;margin-top:-3px;"> Registrasi Akun</span></a>
