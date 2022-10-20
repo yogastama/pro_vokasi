@@ -4,6 +4,8 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Ivw\HomeController as IvwHomeController;
+use App\Models\ProVokasiServiceModel;
+use App\Models\SliderModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +31,13 @@ Route::get('/',  function () {
 
     $result = $agent->isMobile();
     if ($result) {
-        return [HomeController::class, 'index'];
+        $sliders = SliderModel::all();
+        $provokasiServices = ProVokasiServiceModel::all();
+        $data = [
+            'sliders' => $sliders,
+            'provokasi_services' => $provokasiServices
+        ];
+        return view('home.index', $data);
     } else {
         return redirect()->to('/desktop');
     }
