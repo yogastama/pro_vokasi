@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Ivw;
 
 use App\Http\Controllers\Controller;
 use App\Models\EventModel;
+use App\Models\EventParticipantModel;
 use App\Models\ProVokasiServiceModel;
+use App\Models\ResponseEventModel;
 use App\Models\SliderModel;
+use DateTime;
 use Illuminate\Http\Request;
+use Spatie\CalendarLinks\Link;
 
 class HomeController extends Controller
 {
@@ -23,7 +27,7 @@ class HomeController extends Controller
     }
     public function events()
     {
-        $events = EventModel::where('is_active', 'active')->get();
+        $events = EventModel::has('response_event')->where('is_active', 'active')->get();
         $data = [
             'events' => $events
         ];
@@ -54,5 +58,28 @@ class HomeController extends Controller
             'event' => $event,
         ];
         return view('ivw.register_event', $data);
+    }
+    public function success_register_event($id, $participant_id)
+    {
+        $event = EventModel::with('response_event')->find($id);
+        $from = date('Y-m-d H:i', strtotime($event->start_event));
+        $from = DateTime::createFromFormat('Y-m-d H:i', "$from");
+        $to = date('Y-m-d H:i', strtotime($event->close_event));
+        $to = DateTime::createFromFormat('Y-m-d H:i', "$to");
+
+        $link = Link::create('Event ' . $event->title, $from, $to)
+            ->description($event->response_event->content ?? 'Hadiri event ini')
+            ->address($event->type_event);
+
+        $data = [
+            'google_calendar' => $link->google(),
+            'yahoo_calendar' => $link->yahoo(),
+            'web_outlook' => $link->webOutlook(),
+            'web_office' => $link->webOffice(),
+            'participant' => EventParticipantModel::find($participant_id),
+            'event' => EventModel::find($id),
+            'response_event' => ResponseEventModel::where('event_id', $id)->first()
+        ];
+        return view('ivw.success_register_event', $data);
     }
 }

@@ -9,6 +9,7 @@ use DateTime;
 use DateTimeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Jenssegers\Agent\Agent;
 use Spatie\CalendarLinks\Link;
 
 class EventController extends Controller
@@ -52,6 +53,7 @@ class EventController extends Controller
             'token_siva' => 'required'
         ]);
 
+
         try {
             //* get user
             $client = Http::post('https://siva.kemenperin.go.id/api/v1/pro_vokasi/auth/get_user', [
@@ -74,7 +76,13 @@ class EventController extends Controller
                 ]);
                 $participant->save();
 
-                return redirect()->route('event.success_register_event', ['id' => $id, 'participant_id' => $participant->id])->with([
+                $agent = new Agent();
+                $routeDetailEvent = 'ivw.event.success_register_event';
+                if ($agent->isMobile()) {
+                    $routeDetailEvent = 'event.success_register_event';
+                }
+
+                return redirect()->route($routeDetailEvent, ['id' => $id, 'participant_id' => $participant->id])->with([
                     'alert-type' => 'success',
                     'message' => 'Berhasil terdaftar, silakan ikuti instruksi berikut!'
                 ]);

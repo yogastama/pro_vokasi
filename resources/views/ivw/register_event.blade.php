@@ -7,12 +7,17 @@
         Event : {{ $event->title }}
     </p>
     <hr style="background: #ffffff">
-    <form name="fr1" method="POST" action="">
+    <div class="alert alert-light">
+        Silakan lengkapi bagian yang belum terisi.
+    </div>
+    <form action="{{ route('event.save_register', ['id' => $event->id]) }}" method="POST" id="form-participant">
+        @csrf
+        @method('POST')
         <span class="field">
             Nama Perusahaan <span style="color:red;">*</span>
         </span>
         <span class="content">
-            <input type="text" class="isian" name="company" id="company">
+            <input type="text" class="isian" name="instansi" id="instansi">
         </span>
         <div style="clear:both"></div>
 
@@ -20,23 +25,23 @@
             Nama Peserta <span style="color:red;">*</span>
         </span>
         <span class="content">
-            <input type="text" class="isian" name="member" id="member">
+            <input type="text" class="isian" name="name" id="name">
         </span>
         <div style="clear:both"></div>
 
-        <span class="field">
+        {{-- <span class="field">
             Jabatan <span style="color:red;">*</span>
         </span>
         <span class="content">
             <input type="text" class="isian" name="title" id="title">
         </span>
-        <div style="clear:both"></div>
+        <div style="clear:both"></div> --}}
 
         <span class="field">
             Alamat Email <span style="color:red;">*</span>
         </span>
         <span class="content">
-            <input type="text" class="isian" name="email" id="email">
+            <input type="email" class="isian" name="email" id="email">
         </span>
         <div style="clear:both"></div>
 
@@ -44,22 +49,34 @@
             Nomor Handphone (Whatsapp) <span style="color:red;">*</span>
         </span>
         <span class="content">
-            <input type="text" class="isian" name="handphone" id="handphone">
+            <input type="text" class="isian" name="phone" id="phone">
         </span>
         <div style="clear:both"></div>
 
         <span class="field">
+            Jenis kelamin <span style="color:red;">*</span>
+        </span>
+        <span class="content">
+            <select name="jenis_kelamin" id="jenis_kelamin" class="isian">
+                <option value="laki_laki">Laki-laki</option>
+                <option value="perempuan">Perempuan</option>
+            </select>
+        </span>
+        <div style="clear:both"></div>
+
+        {{-- <span class="field">
             ID Zoom <span style="color:red;">*</span>
         </span>
         <span class="content">
             <input type="text" class="isian" name="zoom" id="zoom">
         </span>
-        <div style="clear:both"></div>
-    
+        <div style="clear:both"></div> --}}
+
         <span style="color:red;">*</span> <span style="color:#ffffff;font-size:11px;">Wajib diisi</span>
         <div style="clear:both"></div>
 
         <span class="field nofield">&nbsp;</span>
+        <input type="hidden" name="token_siva" id="token_siva">
         <span class="content">
             <input type='hidden' name='q' value=>
             <input type="submit" class="buttonreg register" value="Submit"
@@ -76,4 +93,37 @@
 
     </form>
 </div>
+@endsection
+
+@section('javascript')
+<script>
+    function renderValueFormEvent()
+    {
+        $('#name').val(localStorage.getItem('name_siva'));
+        $('#name').attr('readonly', 'readonly');
+        $('#instansi').val(localStorage.getItem('institution_siva'));
+        $('#instansi').attr('readonly', 'readonly');
+        $('#email').val(localStorage.getItem('email_siva'));
+        $('#email').attr('readonly', 'readonly');
+        console.log($('#email').val(localStorage.getItem('email_siva')), $('#email').val());
+        $('#token_siva').val(localStorage.getItem('token_siva'));
+    }
+    renderValueFormEvent();
+    $('#form-participant').submit(function (e) {
+        if (!localStorage.getItem('name_siva')) {
+            e.preventDefault();
+            notie.alert({
+                type: 'error',
+                text: 'Silakan login terlebih dahulu!',
+                stay: false,
+                time: 3,
+                position: 'top'
+            })
+            setTimeout(() => {
+                window.location = "{{ url('/desktop/register') }}";
+            }, 2000);
+        }
+    });
+
+</script>
 @endsection

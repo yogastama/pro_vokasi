@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Ivw\AccountController as IvwAccountController;
 use App\Http\Controllers\Ivw\HomeController as IvwHomeController;
 use App\Models\ProVokasiServiceModel;
 use App\Models\SliderModel;
@@ -22,9 +23,13 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'desktop'], function () {
     Route::get('/', [IvwHomeController::class, 'index']);
     Route::get('/events', [IvwHomeController::class, 'events'])->name('ivw.events');
+    Route::get('/accounts', [IvwAccountController::class, 'accounts'])->name('ivw.accounts');
+    Route::get('/login', [IvwAccountController::class, 'login'])->name('ivw.login');
+    Route::get('/register', [IvwAccountController::class, 'register'])->name('ivw.register');
     Route::get('/show/{id}', [IvwHomeController::class, 'show'])->name('ivw.show');
     Route::get('/event/{id}', [IvwHomeController::class, 'event'])->name('ivw.event.show');
     Route::get('/event/register/{id}', [IvwHomeController::class, 'register_event'])->name('ivw.event.register');
+    Route::get('/success_register_event/{id}/{participant_id}', [IvwHomeController::class, 'success_register_event'])->name('ivw.event.success_register_event');
 });
 
 Route::get('/',  function () {

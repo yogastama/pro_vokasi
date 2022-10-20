@@ -26,9 +26,11 @@
         </div>
         <small class="text-muted"><span class="badge text-bg-warning">{{ ucwords($event->type_event) }}</span></small>
         <br>
-        <a href="{{ route('ivw.event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-block btn-lg mt-4 mb-4">
-            Daftar
-        </a>
+        <div class="btn-wrapper-register">
+            <a href="{{ route('ivw.event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-block btn-lg mt-4 mb-4">
+                Daftar
+            </a>
+        </div>
         <br>
         {!! $event->content !!}
     </div>
@@ -43,4 +45,33 @@
         @endif
     </div>
 </div>
+@endsection
+
+@section('javascript')
+    
+<script>
+    function isRegisterEvent()
+    {
+        $.ajax({
+            type: "post",
+            url: "{{ route('event.is_register_event') }}",
+            data: {
+                event_id : '{{ $event->id }}',
+                email : localStorage.getItem('email_siva')
+            },
+            success: function (response) {
+                if (response.results) {
+                    $('.btn-wrapper-register').html(`
+                        <a href="{{ url('/') }}/desktop/success_register_event/${response.results.event_id}/${response.results.id}" class="btn btn-dark btn-lg btn-block mt-4 mb-4">
+                            Lihat detail pendaftaran saya
+                        </a>
+                    `);
+                } else {
+                    
+                }
+            }
+        });
+    }
+    isRegisterEvent();
+</script>
 @endsection
