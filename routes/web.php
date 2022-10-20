@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'desktop'], function () {
     Route::get('/', [IvwHomeController::class, 'index']);
+    Route::get('/events', [IvwHomeController::class, 'events'])->name('ivw.events');
     Route::get('/show/{id}', [IvwHomeController::class, 'show'])->name('ivw.show');
     Route::get('/event/{id}', [IvwHomeController::class, 'event'])->name('ivw.event.show');
     Route::get('/event/register/{id}', [IvwHomeController::class, 'register_event'])->name('ivw.event.register');

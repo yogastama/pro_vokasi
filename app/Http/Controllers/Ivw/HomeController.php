@@ -21,6 +21,14 @@ class HomeController extends Controller
         ];
         return view('ivw.home', $data);
     }
+    public function events()
+    {
+        $events = EventModel::where('is_active', 'active')->get();
+        $data = [
+            'events' => $events
+        ];
+        return view('ivw.events', $data);
+    }
     public function show($id)
     {
         $provokasi = ProVokasiServiceModel::find($id);

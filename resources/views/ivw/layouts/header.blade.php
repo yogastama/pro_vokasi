@@ -24,10 +24,7 @@
     </a>
 </div>
 <div class="subheader">
-    <a href="/?p=register&q=<?php echo sha1(date("Y-m-d H:i:s").'CoachingClinic21'.time()); ?>"
+    <a href="{{ route('ivw.events') }}"
         style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
                 style="width:20px;margin-top:-3px;"> Registrasi Pro-Vokasi</span></a>
-    <a href="https://us02web.zoom.us/j/87446070380" target="blank" style="text-decoration:none;"><span
-            class="buttonzoom"><img src="{{ url('ivw/red-ball.png') }}" style="width:20px;margin-top:-3px;"> Zoom Link Acara Kick-Off
-            of Industrial Vocational Week</span></a>
 </div>
