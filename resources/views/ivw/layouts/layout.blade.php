@@ -13,7 +13,7 @@
     @yield('content')
 
     <div style="clear:both"></div>
-    @if (!auth()->check())
+
     <div class="modal fade" id="modal-register-login" tabindex="-1" aria-labelledby="modal-register-loginLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-light">
@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    @endif
+
     @include('ivw.layouts.script')
 
     <div style="clear:both"></div>
@@ -84,11 +84,11 @@
                 style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
                         style="width:20px;margin-top:-3px;">Akun saya</span></a>
             `);
+        }else{
+            const modalRegisterLogin = new bootstrap.Modal('#modal-register-login')
+            modalRegisterLogin.show();
         }
-        @if(!auth()->check())
-        const modalRegisterLogin = new bootstrap.Modal('#modal-register-login')
-        modalRegisterLogin.show();
-        @endif
+        
     </script>
 </body>
 
