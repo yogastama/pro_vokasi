@@ -51,10 +51,10 @@ body {
 
 .subheader {
     width: 100%;
-    padding: 2px 0px 2px 70px;
+    padding: 10px 0px;
     text-align: center;
     background-color: #FCED3E;
-    height: 30px !important;
+    /* height: 30px !important; */
     font-size: 16px;
 }
 

@@ -13,14 +13,49 @@
     @yield('content')
 
     <div style="clear:both"></div>
-
+    @if (!auth()->check())
+    <div class="modal fade" id="modal-register-login" tabindex="-1" aria-labelledby="modal-register-loginLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-light">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-light" id="modal-register-loginLabel">Akun</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        Kamu belum login, silakan daftar atau login dibawah ini.
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-grid gap-2 mt-3">
+                                <a href="" class="btn btn-danger btn-lg">
+                                    Daftar Akun
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-grid gap-2 mt-3">
+                                <a href="" class="btn btn-outline-danger btn-lg">
+                                    Login Akun
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     @include('ivw.layouts.script')
 
     <div style="clear:both"></div>
 
     <div style="width:100%;color:#ffffff;text-align: center;font-size:12px;padding:1% 5% 1% 5%;">
-        Kementerian Perindustrian Republik Indonesia<br>
-        copyright &copy; 2021
+        Kementerian Perindustrian : BPSDMI<br>
+        Jl. Widya Chandra VIII No.34, RT.3/RW.1, Senayan, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12950
+    </div>
+    <div style="width:100%;color:#ffffff;text-align: center;font-size:12px;padding:1% 5% 1% 5%;"><br>
+        Copyright &copy; 2021
     </div>
 
     <div style="clear:both"></div>
@@ -50,6 +85,10 @@
                         style="width:20px;margin-top:-3px;">Akun saya</span></a>
             `);
         }
+        @if(!auth()->check())
+        const modalRegisterLogin = new bootstrap.Modal('#modal-register-login')
+        modalRegisterLogin.show();
+        @endif
     </script>
 </body>
 

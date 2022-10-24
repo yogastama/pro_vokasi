@@ -9,28 +9,26 @@
                         style="height:50px" alt=""></div>
             </a>
             <a href="https://www.ekon.go.id/" target="_blank">
-                <div class="column" style="width:auto;float:left;"><img src="{{ url('ivw/logo-kemenko2.png') }}" class="gbr"
-                        style="height:50px" alt=""></div>
+                <div class="column" style="width:auto;float:left;"><img src="{{ url('ivw/logo-kemenko2.png') }}"
+                        class="gbr" style="height:50px" alt=""></div>
             </a>
             <a href="https://www.kemenperin.go.id/" target="_blank">
-                <div class="column" style="width:auto;float:left;"><img src="{{ url('ivw/logo-kemenperin.png') }}" class="gbr"
-                        style="height:50px" alt=""></div>
+                <div class="column" style="width:auto;float:left;"><img src="{{ url('ivw/logo-kemenperin.png') }}"
+                        class="gbr" style="height:50px" alt=""></div>
             </a>
             <a href="https://kadin.id/" target="_blank">
-                <div class="column" style="width:auto;float:left;"><img src="{{ url('ivw/logo-kadin2.png') }}" class="gbr"
-                        style="height:50px" alt=""></div>
+                <div class="column" style="width:auto;float:left;"><img src="{{ url('ivw/logo-kadin2.png') }}"
+                        class="gbr" style="height:50px" alt=""></div>
             </a>
         </div>
     </a>
 </div>
 <div class="subheader">
-    <a href="{{ route('ivw.events') }}"
-        style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
-                style="width:20px;margin-top:-3px;"> Event Kemenperin</span></a>
-    <a href="{{ route('ivw.register') }}"
-        style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
-                style="width:20px;margin-top:-3px;"> Registrasi Akun</span></a>
-    <a href="{{ route('ivw.login') }}"
-        style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
-                style="width:20px;margin-top:-3px;"> Login Akun</span></a>
+    {{-- <a href="{{ route('ivw.events') }}"
+    style="text-decoration:none;"><span class="buttonreg"><img src="{{ url('ivw/red-ball.png') }}"
+            style="width:20px;margin-top:-3px;"> Event Kemenperin</span></a> --}}
+    <a class="btn btn-light" href="{{ route('ivw.register') }}" style="text-decoration:none;"><span class="buttonreg"><img
+                src="{{ url('ivw/red-ball.png') }}" style="width:20px;margin-top:-3px;"> Registrasi Akun</span></a>
+    <a class="btn btn-light" href="{{ route('ivw.login') }}" style="text-decoration:none;"><span class="buttonreg"><img
+                src="{{ url('ivw/red-ball.png') }}" style="width:20px;margin-top:-3px;"> Login Akun</span></a>
 </div>
