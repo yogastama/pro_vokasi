@@ -28,14 +28,14 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="d-grid gap-2 mt-3">
-                                <a href="" class="btn btn-danger btn-lg">
+                                <a href="{{ url('/desktop/register') }}" class="btn btn-danger btn-lg">
                                     Daftar Akun
                                 </a>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="d-grid gap-2 mt-3">
-                                <a href="" class="btn btn-outline-danger btn-lg">
+                                <a href="{{ url('/desktop/login') }}" class="btn btn-outline-danger btn-lg">
                                     Login Akun
                                 </a>
                             </div>
