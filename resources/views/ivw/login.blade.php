@@ -32,11 +32,11 @@
 
 
         <div style="clear:both"></div>
-        <div style="width:100%;color:#ffffff;line-height:11px;font-size:11px;margin-top:20px;margin-bottom:20px;">
+        {{-- <div style="width:100%;color:#ffffff;line-height:11px;font-size:11px;margin-top:20px;margin-bottom:20px;">
             Dengan mengisi kolom registrasi ini, Anda tidak berkeberatan data Anda digunakan untuk kepentingan
             kegiatan Industrial Vocational Week dan program lainnya. Data tidak disalahgunakan dan tidak untuk
             kepentingan komersial.
-        </div>
+        </div> --}}
 
     </form>
 </div>
