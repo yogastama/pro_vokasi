@@ -180,8 +180,8 @@
                     }, 3000);
                 } else {
                     localStorage.clear();
-                    if(response.error_messages){
-                        $.each(response.error_messages, function (indexInArray, valueOfElement) { 
+                    if(response.responseJSON.error_messages){
+                        $.each(response.responseJSON.error_messages, function (indexInArray, valueOfElement) { 
                             notie.alert({
                                 type: 'error',
                                 text: valueOfElement,
@@ -194,7 +194,7 @@
                 }
             },
             error: function (response){
-                $.each(response.error_messages, function (indexInArray, valueOfElement) {
+                $.each(response.responseJSON.error_messages, function (indexInArray, valueOfElement) {
                     notie.alert({
                         type: 'error',
                         text: valueOfElement,

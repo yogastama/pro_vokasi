@@ -72,7 +72,7 @@
                 }
             },
             error: function (response){
-                $.each(response.error_messages, function (indexInArray, valueOfElement) {
+                $.each(response.responseJSON.error_messages, function (indexInArray, valueOfElement) {
                     notie.alert({
                         type: 'error',
                         text: valueOfElement,
