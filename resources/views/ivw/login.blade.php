@@ -69,16 +69,18 @@
                     }, 1000);
                 } else {
                     localStorage.clear();
-                    $.each(response.error_messages, function (indexInArray, valueOfElement) {
-                        notie.alert({
-                            type: 'error',
-                            text: valueOfElement,
-                            stay: false,
-                            time: 3,
-                            position: 'top'
-                        })
-                    });
                 }
+            },
+            error: function (response){
+                $.each(response.error_messages, function (indexInArray, valueOfElement) {
+                    notie.alert({
+                        type: 'error',
+                        text: valueOfElement,
+                        stay: false,
+                        time: 3,
+                        position: 'top'
+                    })
+                });
             }
         });
     });
