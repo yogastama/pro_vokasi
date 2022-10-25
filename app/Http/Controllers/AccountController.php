@@ -81,11 +81,23 @@ class AccountController extends Controller
                 case 'unit_kemenperin':
                     $dataSend['satker'] = $request->post('unit_kemenperin');
                     break;
-                case 'unit_non_kemenperin':
+                case 'unit_smk_kemenperin':
                     $dataSend['formInstitusiSmk'] = $request->post('custom_unit');
                     break;
                 case 'unit_industri':
                     $dataSend['formInstitusiIndustri'] = $request->post('custom_unit');
+                    break;
+                case 'unit_kementrian_lembaga':
+                    $dataSend['unit_name'] = $request->post('custom_unit');
+                    $dataSend['unit_type'] = $request->post('jenis_institusi');
+                    break;
+                case 'unit_pemerintah_daerah':
+                    $dataSend['unit_name'] = $request->post('custom_unit');
+                    $dataSend['unit_type'] = $request->post('jenis_institusi');
+                    break;
+                case 'lainnya':
+                    $dataSend['unit_name'] = $request->post('custom_unit');
+                    $dataSend['unit_type'] = $request->post('jenis_institusi');
                     break;
             }
             $client = Http::post('https://siva.kemenperin.go.id/api/v1/pro_vokasi/auth/register', $dataSend);

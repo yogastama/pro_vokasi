@@ -28,9 +28,12 @@
             <div class="form-group mt-3">
                 <label for="jenis_institusi">Jenis Institusi</label>
                 <select name="jenis_institusi" id="jenis_institusi" class="form-control">
-                    <option value="unit_kemenperin">Unit Pendidikan Kemenperin</option>
-                    <option value="unit_non_kemenperin">Unit Pendidikan Non-Kemenperin</option>
+                    <option value="unit_kemenperin">Unit Pendidikan Tinggi Kemenperin</option>
+                    <option value="unit_smk_kemenperin">Unit SMK Kemenperin</option>
+                    <option value="unit_kementrian_lembaga">Unit Kementrian/Lembaga (Non-Kemenperin)</option>
                     <option value="unit_industri">Unit Industri</option>
+                    <option value="unit_pemerintah_daerah">Unit Pemerintah Daerah</option>
+                    <option value="lainnya">Lainnya</option>
                 </select>
             </div>
 
@@ -111,25 +114,14 @@
     renderUnitKemenperin();
     $('#jenis_institusi').change(function (e) { 
         e.preventDefault();
-        switch ($(this).val()) {
-            case 'unit_kemenperin':
-                $('#custom_unit').closest('.form-group').addClass('d-none');
-                $('#province').closest('.form-group').addClass('d-none');
-                renderUnitKemenperin();
-                break;
-            case 'unit_non_kemenperin':
-                $('#unit_kemenperin').closest('.form-group').addClass('d-none');
-                $('#custom_unit').closest('.form-group').removeClass('d-none');
-                $('#province').closest('.form-group').removeClass('d-none');
-                break;
-            case 'unit_industri':
-                $('#unit_kemenperin').closest('.form-group').addClass('d-none');
-                $('#custom_unit').closest('.form-group').removeClass('d-none');
-                $('#province').closest('.form-group').removeClass('d-none');
-                break;
-        
-            default:
-                break;
+        if ($(this).val() == 'unit_kemenperin') {
+            $('#custom_unit').closest('.form-group').addClass('d-none');
+            $('#province').closest('.form-group').addClass('d-none');
+            renderUnitKemenperin();
+        } else {
+            $('#unit_kemenperin').closest('.form-group').addClass('d-none');
+            $('#custom_unit').closest('.form-group').removeClass('d-none');
+            $('#province').closest('.form-group').removeClass('d-none');
         }
     });
     $('#form-register').submit(function (e) { 
