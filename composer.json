@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "silviolleite/laravelpwa": "^2.0",
         "spatie/calendar-links": "^1.8",
-        "tcg/voyager": "^1.5"
+        "tcg/voyager": "^1.5",
+        "yajra/laravel-datatables": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

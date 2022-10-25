@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProvinceModel;
+use App\Models\UserCustomerModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -102,6 +104,18 @@ class AccountController extends Controller
             }
             $client = Http::post('https://siva.kemenperin.go.id/api/v1/pro_vokasi/auth/register', $dataSend);
             $response = json_decode($client->body(), true)['results'];
+
+
+            //* user customer
+            $userCustomer = new UserCustomerModel([
+                'name' => $request->post('name'),
+                'username' => $request->post('username'),
+                'password' => bcrypt($request->post('password')),
+                'institution_type' => $request->post('institution_type'),
+                'institution' => $request->post('institution'),
+            ]);
+            $userCustomer->save();
+
             return response()->json([
                 'status' => 'OK',
                 'results' => $response

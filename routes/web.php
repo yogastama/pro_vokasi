@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Ivw\AccountController as IvwAccountController;
@@ -70,4 +71,6 @@ Route::group(['prefix' => 'accounts'], function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+    Route::get('/', [DashboardController::class, 'index'])->name('voyager.dashboard');
+    Route::get('/table_list_participants', [DashboardController::class, 'table_list_participants'])->name('voyager.table_list_participants');
 });
