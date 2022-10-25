@@ -27,6 +27,7 @@ class DashboardController extends Controller
                 count(event_participants.id) as total
             FROM event_participants
             WHERE event_participants.event_id = $event->id
+            AND event_participants.deleted_at IS NULL
             GROUP BY event_participants.institution
             ORDER BY total DESC
         ");
