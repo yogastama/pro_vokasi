@@ -144,6 +144,17 @@
                     }, 3000);
                 } else {
                     localStorage.clear();
+                    if(response.error_messages){
+                        $.each(response.error_messages, function (indexInArray, valueOfElement) { 
+                            notie.alert({
+                                type: 'error',
+                                text: valueOfElement,
+                                stay: false,
+                                time: 3,
+                                position: 'top'
+                            })       
+                        });
+                    }
                 }
             }
         });
