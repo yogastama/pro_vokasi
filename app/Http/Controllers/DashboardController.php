@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         if (!auth()->check()) {
-            return redirect()->to('/login');
+            return redirect()->to('/admin/login');
         }
         $event = EventModel::where('is_active', 'active');
         if ($request->get('event_id')) {
