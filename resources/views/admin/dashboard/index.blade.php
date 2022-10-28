@@ -1,5 +1,5 @@
 @extends('admin.layouts.layout', [
-    'title' => 'Dashboard event ' . $event->title
+    'title' => 'Dashboard event ' . ($event ? $event->title : '')
 ])
 
 @section('content_html')
@@ -194,7 +194,7 @@
                 'csvHtml5',
                 'pdfHtml5'
             ],
-            ajax: "{{ route('voyager.table_list_participants', ['event_id' => $event->id]) }}",
+            ajax: "{{ route('voyager.table_list_participants', ['event_id' => $event->id ?? '']) }}",
             columns: [{
                     data: 'name',
                     name: 'name'

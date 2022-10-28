@@ -24,7 +24,8 @@ class DashboardController extends Controller
         }
         $events = EventModel::all();
         $totalUserCustomer = UserCustomerModel::all()->count();
-        $instanceWithTotalUser = DB::select("
+        if($event){
+            $instanceWithTotalUser = DB::select("
             SELECT
                 event_participants.institution,
                 count(event_participants.id) as total
@@ -34,14 +35,17 @@ class DashboardController extends Controller
             GROUP BY event_participants.institution
             ORDER BY total DESC
         ");
+        }else{
+            $instanceWithTotalUser = [];
+        }
 
         $data = [
             'event' => $event,
             'events' => $events,
             'total_user_customer' => $totalUserCustomer,
             'instance_with_total_users' => $instanceWithTotalUser,
-            'jumlah_pendaftar_event' => EventParticipantModel::where('event_id', $event->id)->count(),
-            'jumlah_pendaftar_event_3_hari_terakhir' => EventParticipantModel::where('event_id', $event->id)->where('created_at', '>', date('Y-m-d H:i:s', strtotime('-3days')))->where('created_at', '<=', date('Y-m-d H:i:s'))->count(),
+            'jumlah_pendaftar_event' => $event ? EventParticipantModel::where('event_id', $event->id)->count() : 0,
+            'jumlah_pendaftar_event_3_hari_terakhir' => $event ? EventParticipantModel::where('event_id', $event->id)->where('created_at', '>', date('Y-m-d H:i:s', strtotime('-3days')))->where('created_at', '<=', date('Y-m-d H:i:s'))->count() : 0,
         ];
 
         return view('admin.dashboard.index', $data);
