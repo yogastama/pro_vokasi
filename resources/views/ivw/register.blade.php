@@ -38,7 +38,7 @@
             <select name="jenis_institusi" id="jenis_institusi" class="isian">
                 <option value="unit_kemenperin">Unit Pendidikan Tinggi Kemenperin</option>
                 <option value="unit_smk_kemenperin">Unit SMK Kemenperin</option>
-                <option value="unit_kementrian_lembaga">Unit Kementrian/Lembaga (Non-Kemenperin)</option>
+                <option value="unit_kementrian_lembaga">Unit Kementrian/Lembaga</option>
                 <option value="unit_industri">Unit Industri</option>
                 <option value="unit_pemerintah_daerah">Unit Pemerintah Daerah</option>
                 <option value="lainnya">Lainnya</option>
@@ -103,7 +103,7 @@
         <div style="clear:both"></div>
         <div style="width:100%;color:#ffffff;line-height:11px;font-size:11px;margin-top:20px;margin-bottom:20px;">
             Dengan mengisi kolom registrasi ini, Anda tidak berkeberatan data Anda digunakan untuk kepentingan
-            kegiatan Industrial Vocational Week dan program lainnya. Data tidak disalahgunakan dan tidak untuk
+            kegiatan Industrial Vocational Week 2022 & Industrial Vocational Year 2023 dan program lainnya. Data tidak disalahgunakan dan tidak untuk
             kepentingan komersial.
         </div>
 

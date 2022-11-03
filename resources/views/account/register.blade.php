@@ -30,7 +30,7 @@
                 <select name="jenis_institusi" id="jenis_institusi" class="form-control">
                     <option value="unit_kemenperin">Unit Pendidikan Tinggi Kemenperin</option>
                     <option value="unit_smk_kemenperin">Unit SMK Kemenperin</option>
-                    <option value="unit_kementrian_lembaga">Unit Kementrian/Lembaga (Non-Kemenperin)</option>
+                    <option value="unit_kementrian_lembaga">Unit Kementrian/Lembaga</option>
                     <option value="unit_industri">Unit Industri</option>
                     <option value="unit_pemerintah_daerah">Unit Pemerintah Daerah</option>
                     <option value="lainnya">Lainnya</option>

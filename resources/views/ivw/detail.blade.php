@@ -305,7 +305,7 @@
         <div style="clear:both"></div>
         <div style="width:100%;color:#ffffff;line-height:11px;font-size:11px;margin-top:20px;margin-bottom:20px;">
             Dengan mengisi kolom registrasi ini, Anda tidak berkeberatan data Anda digunakan untuk kepentingan
-            kegiatan Industrial Vocational Week dan program lainnya. Data tidak disalahgunakan dan tidak untuk
+            kegiatan Industrial Vocational Week 2022 & Industrial Vocational Year 2023 dan program lainnya. Data tidak disalahgunakan dan tidak untuk
             kepentingan komersial.
         </div>
 
@@ -325,7 +325,7 @@
         <a href="https://us02web.zoom.us/j/87446070380" target="blank" style="text-decoration:none;">
             <div
                 style="margin:0 auto !important;background-color:red;padding:5px;border-radius:3px;color:#ffffff;width:300px;">
-                Acara Kick-Off Industrial Vocational Week</div>
+                Acara Kick-Off Industrial Vocational Week 2022 & Industrial Vocational Year 2023</div>
         </a>
     </div>
 </div>

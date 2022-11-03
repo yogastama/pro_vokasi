@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pro-Vokasi Industrial Vocational Week </title>
+<title>Pro-Vokasi Industrial Vocational Week 2022 & Industrial Vocational Year 2023 </title>
 <link href="{{ url('ivw/bootstrap.min.css') }}" rel="stylesheet">
 <link rel='stylesheet' href='{{ url('ivw/slick.min.css') }}'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css'>
