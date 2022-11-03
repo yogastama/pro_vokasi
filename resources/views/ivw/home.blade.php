@@ -90,7 +90,9 @@
         <div class="modal-content bg-light">
             <div class="modal-header">
                 <h1 class="modal-title fs-5 text-light" id="modal-register-loginLabel">Akun</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close text-light pr-4" data-bs-dismiss="modal">
+                    Skip
+                </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info">

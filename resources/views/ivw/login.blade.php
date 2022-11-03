@@ -61,7 +61,7 @@
                         type: 'success',
                         text: 'Login berhasil!',
                         stay: false,
-                        time: 3,
+                        time: 10,
                         position: 'top'
                     })
                     setTimeout(() => {
@@ -77,7 +77,7 @@
                         type: 'error',
                         text: valueOfElement,
                         stay: false,
-                        time: 3,
+                        time: 10,
                         position: 'top'
                     })
                 });

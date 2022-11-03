@@ -101,7 +101,7 @@
                             type: 'error',
                             text: 'Cek koneksi internet anda!',
                             stay: false,
-                            time: 3,
+                            time: 10,
                             position: 'top'
                         })
                     }
@@ -136,7 +136,7 @@
                         type: 'success',
                         text: 'Akun anda berhasil dibuat, anda akan diarahkan ke halaman masuk/login!',
                         stay: false,
-                        time: 3,
+                        time: 10,
                         position: 'top'
                     })
                     setTimeout(() => {
@@ -150,7 +150,7 @@
                                 type: 'error',
                                 text: valueOfElement,
                                 stay: false,
-                                time: 3,
+                                time: 10,
                                 position: 'top'
                             })       
                         });
@@ -163,7 +163,7 @@
                         type: 'error',
                         text: valueOfElement,
                         stay: false,
-                        time: 3,
+                        time: 10,
                         position: 'top'
                     })
                 });

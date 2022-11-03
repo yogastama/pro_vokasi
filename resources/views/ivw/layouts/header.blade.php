@@ -1,7 +1,7 @@
 <div class="header">
     <a href="/" style="text-decoration:none;color:red;">
         <div style="width:auto;float:left;" class="header_kiri">
-            <img src="{{ url('/images/logo/logo2.png') }}" alt="logo" width="130px">
+            <img src="{{ url('/images/logo/logo3.png') }}" alt="logo" width="60px">
         </div>
         <div style="font-weight: normal;color:#000000;float:left;" class="header_kanan">Industrial Vocational Week 2022 & Industrial Vocational Year 2023
         </div>

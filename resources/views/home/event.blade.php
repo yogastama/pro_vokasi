@@ -35,11 +35,23 @@
                     </div>
                     <small class="text-muted"><span class="badge text-bg-warning">{{ ucwords($event->type_event) }}</span></small>
                     <br>
-                    <div class="d-grid gap-2 mt-3 btn-wrapper-register">
-                        <a href="{{ route('event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-lg">
-                            Daftar
-                        </a>
-                    </div>
+                    @if($event->start_register_event > date('Y-m-d H:i:s'))
+                        <div class="alert alert-info text-center mt-2">
+                            Coming soon...
+                        </div>
+                    @else
+                        @if($event->start_register_event < date('Y-m-d H:i:s') && $event->end_register_event > date('Y-m-d H:i:s'))
+                            <div class="d-grid gap-2 mt-3 btn-wrapper-register">
+                                <a href="{{ route('event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-lg">
+                                    Daftar
+                                </a>
+                            </div>
+                        @else
+                            <div class="alert alert-info text-center mt-2">
+                                Pendaftaran ditutup
+                            </div>
+                        @endif
+                    @endif
                     <hr>
                     {!! $event->content !!}
                 </div>

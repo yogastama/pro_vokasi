@@ -104,6 +104,13 @@ class AccountController extends Controller
             }
             $client = Http::post('https://siva.kemenperin.go.id/api/v1/pro_vokasi/auth/register', $dataSend);
             $response = json_decode($client->body(), true)['results'];
+            if($client->getStatusCode() == 409){
+                return response()->json([
+                    'status' => 'INVALID_REQUEST',
+                    'results' => [],
+                    'error_messages' => json_decode($client->body(), true)['error_messages']
+                ], 400);
+            }
 
 
             //* user customer
@@ -113,6 +120,7 @@ class AccountController extends Controller
                 'password' => bcrypt($request->post('password')),
                 'institution_type' => $request->post('institution_type'),
                 'institution' => $request->post('institution'),
+                'email' => $request->post('email'),
             ]);
             $userCustomer->save();
 

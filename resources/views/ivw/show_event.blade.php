@@ -26,11 +26,30 @@
         </div>
         <small class="text-muted"><span class="badge text-bg-warning">{{ ucwords($event->type_event) }}</span></small>
         <br>
-        <div class="btn-wrapper-register">
-            <a href="{{ route('ivw.event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-block btn-lg mt-4 mb-4">
-                Daftar
-            </a>
+        <div class="mt-2">
+            <i class="fa-solid fa-calendar"></i> Registration Start Date
         </div>
+        <small class="text-muted">
+            {{ date('d M Y H:i', strtotime($event->start_register_event)) }} - {{ date('d M Y H:i', strtotime($event->end_register_event)) }}
+        </small>
+        <br>
+        @if($event->start_register_event > date('Y-m-d H:i:s'))
+            <div class="alert alert-info text-center mt-2">
+                Coming soon...
+            </div>
+        @else
+            @if($event->start_register_event < date('Y-m-d H:i:s') && $event->end_register_event > date('Y-m-d H:i:s'))
+                <div class="btn-wrapper-register">
+                    <a href="{{ route('ivw.event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-block btn-lg mt-4 mb-4">
+                        Daftar
+                    </a>
+                </div>
+            @else
+                <div class="alert alert-info text-center mt-2">
+                    Pendaftaran ditutup
+                </div>
+            @endif
+        @endif
         <br>
         {!! $event->content !!}
     </div>

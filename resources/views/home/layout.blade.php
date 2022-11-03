@@ -94,7 +94,7 @@
             type: `{{ Session::get('alert-type') }}`,
             text: `{{ Session::get('message') }}`,
             stay: false,
-            time: 3,
+            time: 10,
             position: 'top'
         })
         @endif

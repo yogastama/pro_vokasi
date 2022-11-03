@@ -11,6 +11,10 @@
         <div style="clear:both"></div>
         <br>
         {!! $provokasi->content !!}
+        <br>
+        <a href="{{ $provokasi->link }}" class="btn btn-danger btn-block btn-lg mt-3" target="_blank">
+            Visit
+        </a>
     </div>
     <div class="kanan">
         @if ($provokasi->youtube_video)

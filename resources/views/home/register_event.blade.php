@@ -116,7 +116,7 @@
                     type: 'error',
                     text: 'Silakan login terlebih dahulu!',
                     stay: false,
-                    time: 3,
+                    time: 10,
                     position: 'top'
                 })
                 setTimeout(() => {
