@@ -5,6 +5,8 @@
     @include('ivw.head')
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    @yield('css')
 </head>
 
 <body>

@@ -1,5 +1,13 @@
 @extends('ivw.layouts.layout')
 
+@section('css')
+<style>
+    .wrapper-content p span{
+        color:#fff !important;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="kiri">
@@ -51,7 +59,9 @@
             @endif
         @endif
         <br>
-        {!! $event->content !!}
+        <div class="wrapper-content">
+            {!! $event->content !!}
+        </div>
     </div>
     <div class="kanan">
         @if ($event->youtube_video)
