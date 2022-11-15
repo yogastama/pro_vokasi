@@ -77,7 +77,8 @@ class AccountController extends Controller
                 'username',
                 'name',
                 'password',
-                'email'
+                'email',
+                'provinsi'
             ]);
             switch ($request->post('jenis_institusi')) {
                 case 'unit_kemenperin':
@@ -103,6 +104,7 @@ class AccountController extends Controller
                     break;
             }
             $client = Http::post('https://siva.kemenperin.go.id/api/v1/pro_vokasi/auth/register', $dataSend);
+            
             $response = json_decode($client->body(), true)['results'];
             if($client->getStatusCode() == 409){
                 return response()->json([
@@ -129,6 +131,7 @@ class AccountController extends Controller
                 'results' => $response
             ]);
         } catch (\Throwable $th) {
+            dd($th);
             return response()->json([
                 'status' => 'INVALID_REQUEST',
                 'results' => [],
