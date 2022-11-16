@@ -67,7 +67,7 @@
                     Daftar
                 </button>
             </div>
-            <a href="{{ url('/accounts/register') }}" class="mt-4">
+            <a href="{{ url('/accounts/login') }}" class="mt-4">
                 Sudah punya akun? Masuk disini
             </a>
         </form>

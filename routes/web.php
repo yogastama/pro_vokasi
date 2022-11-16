@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Ivw\AccountController as IvwAccountController;
 use App\Http\Controllers\Ivw\HomeController as IvwHomeController;
@@ -70,6 +71,13 @@ Route::group(['prefix' => 'accounts'], function () {
 
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'events'], function () {
+        Route::get('/{event}', [AdminEventController::class, 'show'])->name('voyager.events.show');
+        Route::get('/get_waiting_verify/{event}/{type_event}', [AdminEventController::class, 'get_waiting_verify'])->name('voyager.events.get_waiting_verify');
+        Route::get('/get_verified/{event}/{type_event}', [AdminEventController::class, 'get_verified'])->name('voyager.events.get_verified');
+        Route::get('/send_qr_code/{id_participant}', [AdminEventController::class, 'send_qr_code'])->name('voyager.events.send_qr_code');
+        Route::get('/send_link_zoom/{id_participant}', [AdminEventController::class, 'send_link_zoom'])->name('voyager.events.send_link_zoom');
+    });
     Voyager::routes();
     Route::get('/', [DashboardController::class, 'index'])->name('voyager.dashboard');
     Route::get('/table_list_participants', [DashboardController::class, 'table_list_participants'])->name('voyager.table_list_participants');

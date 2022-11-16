@@ -52,12 +52,12 @@
             </span>
             <span class="content">
                 <select name="unit_kemenperin" id="unit_kemenperin" class="isian">
-                    
+
                 </select>
             </span>
             <div style="clear:both"></div>
         </div>
-        
+
         <div class="form-institusi-custom d-none">
             <span class="field">
                 Nama Institusi Anda <span style="color:red;">*</span>
@@ -75,7 +75,7 @@
             <span class="content">
                 <select name="province" id="province" class="isian">
                     @foreach ($provinces as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
             </span>
@@ -91,13 +91,15 @@
         <div style="clear:both"></div>
 
         <span class="field nofield">&nbsp;</span>
-        <span class="content">
+        <div class="content">
             <input type='hidden' name='q' value=>
-            <button type="submit" class="buttonreg register" value="Submit"
-                style="border:0px solid;background-color:red;color:#ffffff !important;">
-                Masuk
+            <button type="submit" class="buttonreg register" value="Submit" style="border:0px solid;background-color:red;color:#ffffff !important;">
+                Daftar
             </button>
-        </span>
+            <a href="" class="btn btn-outline-danger">
+                Sudah punya akun? Masuk disini
+            </a>
+        </div>
 
 
         <div style="clear:both"></div>
@@ -113,19 +115,18 @@
 
 @section('javascript')
 <script>
-    function renderUnitKemenperin()
-    {
+    function renderUnitKemenperin() {
         let jenisInstitusi = $('#jenis_institusi');
         let unitKemenperin = $('#unit_kemenperin');
-        if(jenisInstitusi.val() == 'unit_kemenperin'){
+        if (jenisInstitusi.val() == 'unit_kemenperin') {
             $.ajax({
                 type: "get",
                 url: "https://siva.kemenperin.go.id/api/v1/pro_vokasi/master_data/unit_pendidikan_kemenperin",
-                success: function (response) {
+                success: function(response) {
                     if (response.status == 'OK') {
                         let datas = response.results;
                         let htmlOptions = '';
-                        $.each(datas, function (indexInArray, valueOfElement) { 
+                        $.each(datas, function(indexInArray, valueOfElement) {
                             htmlOptions += `
                                 <option value="${valueOfElement.id}">${valueOfElement.name}</option>
                             `;
@@ -143,12 +144,12 @@
                     }
                 }
             });
-        }else{
+        } else {
             unitKemenperin.closest('.form-unit-kemenperin').addClass('d-none');
         }
     }
     renderUnitKemenperin();
-    $('#jenis_institusi').change(function (e) { 
+    $('#jenis_institusi').change(function(e) {
         e.preventDefault();
         if ($(this).val() == 'unit_kemenperin') {
             $('#custom_unit').closest('.form-institusi-custom').addClass('d-none');
@@ -160,13 +161,13 @@
             $('#province').closest('.form-province').removeClass('d-none');
         }
     });
-    $('#form-register').submit(function (e) { 
+    $('#form-register').submit(function(e) {
         e.preventDefault();
         $.ajax({
             type: "post",
             url: $(this).attr('action'),
             data: $(this).serialize(),
-            success: function (response) {
+            success: function(response) {
                 if (response.status == 'OK') {
                     notie.alert({
                         type: 'success',
@@ -180,21 +181,21 @@
                     }, 3000);
                 } else {
                     localStorage.clear();
-                    if(response.responseJSON.error_messages){
-                        $.each(response.responseJSON.error_messages, function (indexInArray, valueOfElement) { 
+                    if (response.responseJSON.error_messages) {
+                        $.each(response.responseJSON.error_messages, function(indexInArray, valueOfElement) {
                             notie.alert({
                                 type: 'error',
                                 text: valueOfElement,
                                 stay: false,
                                 time: 10,
                                 position: 'top'
-                            })       
+                            })
                         });
                     }
                 }
             },
-            error: function (response){
-                $.each(response.responseJSON.error_messages, function (indexInArray, valueOfElement) {
+            error: function(response) {
+                $.each(response.responseJSON.error_messages, function(indexInArray, valueOfElement) {
                     notie.alert({
                         type: 'error',
                         text: valueOfElement,
@@ -206,6 +207,5 @@
             }
         });
     });
-
 </script>
 @endsection

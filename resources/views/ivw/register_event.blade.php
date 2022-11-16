@@ -10,6 +10,9 @@
     <div class="alert alert-light">
         Silakan lengkapi bagian yang belum terisi.
     </div>
+    <div class="alert alert-danger alert-no-login d-none">
+        Anda belum login ke aplikasi provokasi, silakan <a href="{{ url('/desktop/register') }}">Daftar disini</a> atau <a href="{{ url('/desktop/login') }}">Masuk disini</a>.
+    </div>
     <form action="{{ route('event.save_register', ['id' => $event->id]) }}" method="POST" id="form-participant">
         @csrf
         @method('POST')
@@ -79,8 +82,7 @@
         <input type="hidden" name="token_siva" id="token_siva">
         <span class="content">
             <input type='hidden' name='q' value=>
-            <input type="submit" class="buttonreg register" value="Submit"
-                style="border:0px solid;background-color:red;color:#ffffff !important;">
+            <input type="submit" class="buttonreg register" value="Submit" style="border:0px solid;background-color:red;color:#ffffff !important;">
         </span>
 
 
@@ -97,19 +99,23 @@
 
 @section('javascript')
 <script>
-    function renderValueFormEvent()
-    {
-        $('#name').val(localStorage.getItem('name_siva'));
-        $('#name').attr('readonly', 'readonly');
-        $('#instansi').val(localStorage.getItem('institution_siva'));
-        $('#instansi').attr('readonly', 'readonly');
-        $('#email').val(localStorage.getItem('email_siva'));
-        $('#email').attr('readonly', 'readonly');
-        console.log($('#email').val(localStorage.getItem('email_siva')), $('#email').val());
+    function renderValueFormEvent() {
+        if (localStorage.getItem('name_siva')) {
+            $('#name').val(localStorage.getItem('name_siva'));
+            $('#name').attr('readonly', 'readonly');
+        }
+        if (localStorage.getItem('institution_siva')) {
+            $('#instansi').val(localStorage.getItem('institution_siva'));
+            $('#instansi').attr('readonly', 'readonly');
+        }
+        if (localStorage.getItem('email_siva')) {
+            $('#email').val(localStorage.getItem('email_siva'));
+            $('#email').attr('readonly', 'readonly');
+        }
         $('#token_siva').val(localStorage.getItem('token_siva'));
     }
     renderValueFormEvent();
-    $('#form-participant').submit(function (e) {
+    $('#form-participant').submit(function(e) {
         if (!localStorage.getItem('name_siva')) {
             e.preventDefault();
             notie.alert({
@@ -124,6 +130,8 @@
             }, 2000);
         }
     });
-
+    if (!localStorage.getItem('token_siva')) {
+        $('.alert-no-login').removeClass('d-none');
+    }
 </script>
 @endsection

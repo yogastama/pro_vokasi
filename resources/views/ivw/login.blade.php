@@ -24,8 +24,7 @@
         <span class="field nofield">&nbsp;</span>
         <span class="content">
             <input type='hidden' name='q' value=>
-            <button type="submit" class="buttonreg register" value="Submit"
-                style="border:0px solid;background-color:red;color:#ffffff !important;">
+            <button type="submit" class="buttonreg register" value="Submit" style="border:0px solid;background-color:red;color:#ffffff !important;">
                 Masuk
             </button>
         </span>
@@ -44,13 +43,13 @@
 
 @section('javascript')
 <script>
-    $('#form-login').submit(function (e) {
+    $('#form-login').submit(function(e) {
         e.preventDefault();
         $.ajax({
             type: "post",
             url: $(this).attr('action'),
             data: $(this).serialize(),
-            success: function (response) {
+            success: function(response) {
                 if (response.status == 'OK') {
                     localStorage.setItem("email_siva", response.results.user.email);
                     localStorage.setItem("username_siva", response.results.user.username);
@@ -71,8 +70,8 @@
                     localStorage.clear();
                 }
             },
-            error: function (response){
-                $.each(response.responseJSON.error_messages, function (indexInArray, valueOfElement) {
+            error: function(response) {
+                $.each(response.responseJSON.error_messages, function(indexInArray, valueOfElement) {
                     notie.alert({
                         type: 'error',
                         text: valueOfElement,
@@ -84,6 +83,5 @@
             }
         });
     });
-
 </script>
 @endsection

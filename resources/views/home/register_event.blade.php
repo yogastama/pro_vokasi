@@ -42,6 +42,9 @@
                     <div class="alert alert-warning">
                         Silakan lengkapi & cek kembali form di bawah ini.
                     </div>
+                    <div class="alert alert-danger alert-no-login d-none">
+                        Anda belum login ke aplikasi provokasi, silakan <a href="{{ url('/accounts/register') }}">Daftar disini</a> atau <a href="{{ url('/accounts/login') }}">Masuk disini</a>.
+                    </div>
                 </div>
                 <div class="col-12">
                     <form action="{{ route('event.save_register', ['id' => $event->id]) }}" id="form-participant" method="POST">
@@ -97,32 +100,36 @@
 @endsection
 
 @section('javascript')
-    <script>
-        function renderValueFormEvent()
-        {
+<script>
+    function renderValueFormEvent() {
+        if (localStorage.getItem('name_siva')) {
             $('#name').val(localStorage.getItem('name_siva'));
             $('#name').attr('readonly', 'true');
+        }
+        if (localStorage.getItem('email_siva')) {
             $('#email').val(localStorage.getItem('email_siva'));
             $('#email').attr('readonly', 'true');
-            // $('#instansi').val(localStorage.getItem('institution_siva'));
-            // $('#instansi').attr('readonly', 'true');
-            $('#token_siva').val(localStorage.getItem('token_siva'));
         }
-        renderValueFormEvent();
-        $('#form-participant').submit(function (e) { 
-            if (!localStorage.getItem('name_siva')) {
-                e.preventDefault();
-                notie.alert({
-                    type: 'error',
-                    text: 'Silakan login terlebih dahulu!',
-                    stay: false,
-                    time: 10,
-                    position: 'top'
-                })
-                setTimeout(() => {
-                    window.location = '/accounts/login';
-                }, 2000);
-            }
-        });
-    </script>
+        $('#token_siva').val(localStorage.getItem('token_siva'));
+    }
+    renderValueFormEvent();
+    $('#form-participant').submit(function(e) {
+        if (!localStorage.getItem('name_siva')) {
+            e.preventDefault();
+            notie.alert({
+                type: 'error',
+                text: 'Silakan login terlebih dahulu!',
+                stay: false,
+                time: 10,
+                position: 'top'
+            })
+            setTimeout(() => {
+                window.location = '/accounts/login';
+            }, 2000);
+        }
+    });
+    if (!localStorage.getItem('token_siva')) {
+        $('.alert-no-login').removeClass('d-none');
+    }
+</script>
 @endsection
