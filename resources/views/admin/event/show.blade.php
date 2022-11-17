@@ -13,6 +13,7 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">Detail</a></li>
+                            <li role="presentation"><a href="#target-participants" aria-controls="target-participants" role="tab" data-toggle="tab">Target Participants</a></li>
                             <li role="presentation"><a href="#waiting-verify" aria-controls="waiting-verify" role="tab" data-toggle="tab">Waiting Verify</a></li>
                             <li role="presentation"><a href="#verified-user" aria-controls="verified-user" role="tab" data-toggle="tab">Verified User</a></li>
                         </ul>
@@ -80,6 +81,39 @@
                                 </table>
                                 <hr>
                                 {!! $event->content !!}
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="target-participants">
+                                <form action="{{ route('voyager.events.update_target_participants', ['id_event' => $event->id]) }}" id="form-target-participants" method="POST">
+                                    <div class="form-group">
+                                        <input @if($target_participants['unit_kemenperin']) checked="checked" @endif type="checkbox" name="target_participants[unit_kemenperin]" id="unit_kemenperin" value="on">
+                                        <label for="unit_kemenperin">Unit Pendidikan Tinggi Kemenperin</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input @if($target_participants['unit_smk_kemenperin']) checked="checked" @endif type="checkbox" name="target_participants[unit_smk_kemenperin]" id="unit_smk_kemenperin" value="on">
+                                        <label for="unit_smk_kemenperin">Unit SMK Kemenperin</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input @if($target_participants['unit_kementrian_lembaga']) checked="checked" @endif type="checkbox" name="target_participants[unit_kementrian_lembaga]" id="unit_kementrian_lembaga" value="on">
+                                        <label for="unit_kementrian_lembaga">Unit Kementrian/Lembaga</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input @if($target_participants['unit_industri']) checked="checked" @endif type="checkbox" name="target_participants[unit_industri]" id="unit_industri" value="on">
+                                        <label for="unit_industri">Unit Industri</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input @if($target_participants['unit_pemerintah_daerah']) checked="checked" @endif type="checkbox" name="target_participants[unit_pemerintah_daerah]" id="unit_pemerintah_daerah" value="on">
+                                        <label for="unit_pemerintah_daerah">Unit Pemerintah Daerah</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input @if($target_participants['lainnya']) checked="checked" @endif type="checkbox" name="target_participants[lainnya]" id="lainnya" value="on">
+                                        <label for="lainnya">Lainnya</label>
+                                    </div>
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="btn btn-primary">
+                                        Update
+                                    </button>
+                                </form>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="waiting-verify">
                                 <div class="row">
@@ -178,72 +212,58 @@
             serverSide: true,
             ajax: "{{ route('voyager.events.get_waiting_verify', ['event' => $event->id, 'type_event' => $event->type_event]) }}",
             columns: [{
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'phone_number',
-                    name: 'phone_number'
-                },
-                {
-                    data: 'institution_type',
-                    name: 'institution_type'
-                },
-                {
-                    data: 'institution',
-                    name: 'institution'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ]
+                data: 'name',
+                name: 'name'
+            }, {
+                data: 'email',
+                name: 'email'
+            }, {
+                data: 'phone_number',
+                name: 'phone_number'
+            }, {
+                data: 'institution_type',
+                name: 'institution_type'
+            }, {
+                data: 'institution',
+                name: 'institution'
+            }, {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false
+            }, ]
         });
         var tableVerified = $('#table-verified').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('voyager.events.get_verified', ['event' => $event->id, 'type_event' => $event->type_event]) }}",
             columns: [{
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'phone_number',
-                    name: 'phone_number'
-                },
-                {
-                    data: 'institution_type',
-                    name: 'institution_type'
-                },
-                {
-                    data: 'institution',
-                    name: 'institution'
-                },
-                {
-                    data: 'is_sent_qr',
-                    name: 'is_sent_qr'
-                },
-                {
-                    data: 'is_sent_zoom_link',
-                    name: 'is_sent_zoom_link'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ]
+                data: 'name',
+                name: 'name'
+            }, {
+                data: 'email',
+                name: 'email'
+            }, {
+                data: 'phone_number',
+                name: 'phone_number'
+            }, {
+                data: 'institution_type',
+                name: 'institution_type'
+            }, {
+                data: 'institution',
+                name: 'institution'
+            }, {
+                data: 'is_sent_qr',
+                name: 'is_sent_qr'
+            }, {
+                data: 'is_sent_zoom_link',
+                name: 'is_sent_zoom_link'
+            }, {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false
+            }, ]
         });
     });
     $(document).on('click', '.btn-send-qr', function(e) {

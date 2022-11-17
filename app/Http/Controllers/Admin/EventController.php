@@ -7,6 +7,7 @@ use App\Mail\InvitationMail;
 use Illuminate\Http\Request;
 use App\Models\EventModel;
 use App\Models\EventParticipantModel;
+use App\Models\EventTargetModel;
 use DataTables;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -17,8 +18,17 @@ class EventController extends Controller
     public function show($event)
     {
         $event = EventModel::with('category_event')->find($event);
+        $targetParticipants = [
+            'unit_kemenperin' => EventTargetModel::where('event_id', $event->id)->where('key', 'unit_kemenperin')->first(),
+            'unit_smk_kemenperin' => EventTargetModel::where('event_id', $event->id)->where('key', 'unit_smk_kemenperin')->first(),
+            'unit_kementrian_lembaga' => EventTargetModel::where('event_id', $event->id)->where('key', 'unit_kementrian_lembaga')->first(),
+            'unit_industri' => EventTargetModel::where('event_id', $event->id)->where('key', 'unit_industri')->first(),
+            'unit_pemerintah_daerah' => EventTargetModel::where('event_id', $event->id)->where('key', 'unit_pemerintah_daerah')->first(),
+            'lainnya' => EventTargetModel::where('event_id', $event->id)->where('key', 'lainnya')->first(),
+        ];
         $data = [
-            'event' => $event
+            'event' => $event,
+            'target_participants' => $targetParticipants
         ];
         return view('admin.event.show', $data);
     }
@@ -202,6 +212,28 @@ class EventController extends Controller
         return redirect()->back()->with([
             'alert-type' => 'success',
             'message' => 'Success verify user!'
+        ]);
+    }
+    public function update_target_participants($id_event, Request $request)
+    {
+        $request->validate([
+            'target_participants' => 'required'
+        ]);
+
+        $targetParticipants = $request->post('target_participants');
+        EventTargetModel::where('event_id', $id_event)->delete();
+        foreach ($targetParticipants as $key => $value) {
+            $targetParticipant = new EventTargetModel([
+                'event_id' => $id_event,
+                'key' => $key,
+                'value' => ucwords(str_replace('_', ' ', $key))
+            ]);
+            $targetParticipant->save();
+        }
+
+        return redirect()->back()->with([
+            'alert-type' => 'success',
+            'message' => 'Success update event targets!'
         ]);
     }
 }

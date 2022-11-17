@@ -77,6 +77,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/get_verified/{event}/{type_event}', [AdminEventController::class, 'get_verified'])->name('voyager.events.get_verified');
         Route::get('/send_qr_code/{id_participant}', [AdminEventController::class, 'send_qr_code'])->name('voyager.events.send_qr_code');
         Route::get('/send_link_zoom/{id_participant}', [AdminEventController::class, 'send_link_zoom'])->name('voyager.events.send_link_zoom');
+        Route::post('/update_target_participants/{id_event}', [AdminEventController::class, 'update_target_participants'])->name('voyager.events.update_target_participants');
     });
     Voyager::routes();
     Route::get('/', [DashboardController::class, 'index'])->name('voyager.dashboard');
