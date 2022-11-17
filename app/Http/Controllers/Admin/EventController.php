@@ -83,6 +83,16 @@ class EventController extends Controller
                                 <a href='" . route('voyager.events.send_qr_code', ['id_participant' => $row->id]) . "' class='btn btn-warning btn-send-qr'>Kirim undangan QR Code</a>
                             ";
                         break;
+                    case 'online':
+                        $button .= "
+                                <a href='" . route('voyager.events.send_link_zoom', ['id_participant' => $row->id]) . "' class='btn btn-primary btn-send-qr'>Kirim link zoom</a>
+                            ";
+                        break;
+                    case 'offline':
+                        $button .= "
+                                <a href='" . route('voyager.events.send_qr_code', ['id_participant' => $row->id]) . "' class='btn btn-warning btn-send-qr'>Kirim undangan QR Code</a>
+                            ";
+                        break;
 
                     default:
                         # code...

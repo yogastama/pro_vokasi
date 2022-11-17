@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ivw;
 use App\Http\Controllers\Controller;
 use App\Models\EventModel;
 use App\Models\EventParticipantModel;
+use App\Models\EventTargetModel;
 use App\Models\ProVokasiServiceModel;
 use App\Models\ResponseEventModel;
 use App\Models\SliderModel;
@@ -45,17 +46,21 @@ class HomeController extends Controller
     }
     public function event($id)
     {
+        $participantRecommendations = EventTargetModel::where('event_id', $id)->get();
         $event = EventModel::with('category_event')->find($id);
         $data = [
             'event' => $event,
+            'participant_recommendations' => $participantRecommendations
         ];
         return view('ivw.show_event', $data);
     }
     public function register_event($id)
     {
         $event = EventModel::with('category_event')->find($id);
+        $participantRecommendations = EventTargetModel::where('event_id', $id)->get();
         $data = [
             'event' => $event,
+            'participant_recommendations' => $participantRecommendations
         ];
         return view('ivw.register_event', $data);
     }

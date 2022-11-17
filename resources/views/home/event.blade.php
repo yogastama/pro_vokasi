@@ -1,5 +1,5 @@
 @extends('home.layout', [
-    'menu' => 'events'
+'menu' => 'events'
 ])
 
 @section('content')
@@ -34,26 +34,34 @@
                         <i class="fa-solid fa-location-pin"></i> Event Type
                     </div>
                     <small class="text-muted"><span class="badge text-bg-warning">{{ ucwords($event->type_event) }}</span></small>
+                    <div class="mt-2">
+                        <i class="fa-solid fa-users"></i> Participant Recommendations
+                    </div>
+                    @foreach($participant_recommendations as $participant)
+                    <div class="badge text-bg-warning">
+                        {{ $participant->value }}
+                    </div>
+                    @endforeach
                     <br>
                     @if($event->start_register_event > date('Y-m-d H:i:s'))
-                        <div class="alert alert-info text-center mt-2">
-                            Coming soon...
-                        </div>
+                    <div class="alert alert-info text-center mt-2">
+                        Coming soon...
+                    </div>
                     @else
-                        @if($event->start_register_event < date('Y-m-d H:i:s') && $event->end_register_event > date('Y-m-d H:i:s'))
-                            <div class="d-grid gap-2 mt-3 btn-wrapper-register">
-                                <a href="{{ route('event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-lg">
-                                    Daftar
-                                </a>
-                            </div>
+                    @if($event->start_register_event < date('Y-m-d H:i:s') && $event->end_register_event > date('Y-m-d H:i:s'))
+                        <div class="d-grid gap-2 mt-3 btn-wrapper-register">
+                            <a href="{{ route('event.register', ['id' => $event->id]) }}" class="btn btn-primary btn-lg">
+                                Daftar
+                            </a>
+                        </div>
                         @else
-                            <div class="alert alert-info text-center mt-2">
-                                Pendaftaran ditutup
-                            </div>
+                        <div class="alert alert-info text-center mt-2">
+                            Pendaftaran ditutup
+                        </div>
                         @endif
-                    @endif
-                    <hr>
-                    {!! $event->content !!}
+                        @endif
+                        <hr>
+                        {!! $event->content !!}
                 </div>
             </div>
         </div>
@@ -62,29 +70,28 @@
 @endsection
 
 @section('javascript')
-    <script>
-        function isRegisterEvent()
-        {
-            $.ajax({
-                type: "post",
-                url: "{{ route('event.is_register_event') }}",
-                data: {
-                    event_id : '{{ $event->id }}',
-                    email : localStorage.getItem('email_siva')
-                },
-                success: function (response) {
-                    if (response.results) {
-                        $('.btn-wrapper-register').html(`
+<script>
+    function isRegisterEvent() {
+        $.ajax({
+            type: "post",
+            url: "{{ route('event.is_register_event') }}",
+            data: {
+                event_id: '{{ $event->id }}',
+                email: localStorage.getItem('email_siva')
+            },
+            success: function(response) {
+                if (response.results) {
+                    $('.btn-wrapper-register').html(`
                             <a href="/events/success_register_event/${response.results.event_id}/${response.results.id}" class="btn btn-dark btn-lg">
                                 Lihat detail pendaftaran saya
                             </a>
                         `);
-                    } else {
-                        
-                    }
+                } else {
+
                 }
-            });
-        }
-        isRegisterEvent();
-    </script>
+            }
+        });
+    }
+    isRegisterEvent();
+</script>
 @endsection

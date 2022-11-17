@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventModel;
 use App\Models\EventParticipantModel;
+use App\Models\EventTargetModel;
 use App\Models\ResponseEventModel;
 use DateTime;
 use DateTimeInterface;
@@ -29,16 +30,20 @@ class EventController extends Controller
     public function show($id)
     {
         $event = EventModel::with('category_event')->find($id);
+        $participantRecommendations = EventTargetModel::where('event_id', $id)->get();
         $data = [
-            'event' => $event
+            'event' => $event,
+            'participant_recommendations' => $participantRecommendations
         ];
         return view('home.event', $data);
     }
     public function register($id)
     {
         $event = EventModel::with('category_event')->find($id);
+        $participantRecommendations = EventTargetModel::where('event_id', $id)->get();
         $data = [
-            'event' => $event
+            'event' => $event,
+            'participant_recommendations' => $participantRecommendations
         ];
         return view('home.register_event', $data);
     }

@@ -50,28 +50,25 @@
                     <form action="{{ route('event.save_register', ['id' => $event->id]) }}" id="form-participant" method="POST">
                         @csrf
                         @method('POST')
-                        <div class="form-group mt-2">
+                        <!-- <div class="form-group mt-2">
                             <label for="name">Nama</label>
-                            <input type="text" class="form-control" name="name" id="name">
-                        </div>
-                        <div class="form-group mt-2">
+                        </div> -->
+                        <!-- <div class="form-group mt-2">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" name="email" id="email">
+                        </div> -->
+                        <input type="hidden" class="form-control" name="name" id="name">
+                        <input type="hidden" class="form-control" name="email" id="email">
+                        <div class="form-group mt-2">
+                            <label for="instansi">Nama Instansi</label>
+                            <input type="text" class="form-control" name="instansi" id="instansi">
                         </div>
                         <div class="form-group mt-2">
                             <label for="jenis_instansi">Jenis Instansi</label>
                             <select name="jenis_instansi" id="jenis_instansi" class="form-control">
-                                <option value="kementrian">Kementrian/lembaga</option>
-                                <option value="pendidikan_tinggi">Pendidikan tinggi</option>
-                                <option value="smk">SMK</option>
-                                <option value="industri">Industri</option>
-                                <option value="pemerintah_daerah">Pemerintah daerah</option>
-                                <option value="lainnya">Lainnya</option>
+                                @foreach($participant_recommendations as $participant)
+                                <option value="{{ $participant->key }}">{{ $participant->value }}</option>
+                                @endforeach
                             </select>
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="instansi">Nama Instansi</label>
-                            <input type="text" class="form-control" name="instansi" id="instansi">
                         </div>
                         <div class="form-group mt-2">
                             <label for="phone">Phone</label>
@@ -104,11 +101,15 @@
     function renderValueFormEvent() {
         if (localStorage.getItem('name_siva')) {
             $('#name').val(localStorage.getItem('name_siva'));
-            $('#name').attr('readonly', 'true');
+            // $('#name').attr('readonly', 'true');
         }
         if (localStorage.getItem('email_siva')) {
             $('#email').val(localStorage.getItem('email_siva'));
-            $('#email').attr('readonly', 'true');
+            // $('#email').attr('readonly', 'true');
+        }
+        if (localStorage.getItem('institution_siva')) {
+            $('#instansi').val(localStorage.getItem('institution_siva'));
+            // $('#instansi').attr('readonly', 'true');
         }
         $('#token_siva').val(localStorage.getItem('token_siva'));
     }

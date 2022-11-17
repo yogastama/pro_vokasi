@@ -8,7 +8,7 @@
     </p>
     <hr style="background: #ffffff">
     <div class="alert alert-light">
-        Silakan lengkapi bagian yang belum terisi.
+        Silakan lengkapi & cek kembali form di bawah ini.
     </div>
     <div class="alert alert-danger alert-no-login d-none">
         Anda belum login ke aplikasi provokasi, silakan <a href="{{ url('/desktop/register') }}">Daftar disini</a> atau <a href="{{ url('/desktop/login') }}">Masuk disini</a>.
@@ -16,8 +16,24 @@
     <form action="{{ route('event.save_register', ['id' => $event->id]) }}" method="POST" id="form-participant">
         @csrf
         @method('POST')
+        <!-- <span class="field">
+            Nama Peserta <span style="color:red;">*</span>
+        </span>
+        <span class="content">
+            </span>
+            <div style="clear:both"></div> -->
+        <input type="hidden" class="isian" name="name" id="name">
+
+        <!-- <span class="field">
+            Alamat Email <span style="color:red;">*</span>
+        </span>
+        <span class="content">
+        </span> -->
+        <input type="hidden" class="isian" name="email" id="email">
+        <div style="clear:both"></div>
+
         <span class="field">
-            Nama Perusahaan <span style="color:red;">*</span>
+            Nama instansi <span style="color:red;">*</span>
         </span>
         <span class="content">
             <input type="text" class="isian" name="instansi" id="instansi">
@@ -25,12 +41,17 @@
         <div style="clear:both"></div>
 
         <span class="field">
-            Nama Peserta <span style="color:red;">*</span>
+            Jenis instansi <span style="color:red;">*</span>
         </span>
         <span class="content">
-            <input type="text" class="isian" name="name" id="name">
+            <select name="jenis_instansi" id="jenis_instansi" class=" isian">
+                @foreach($participant_recommendations as $participant)
+                <option value="{{ $participant->key }}">{{ $participant->value }}</option>
+                @endforeach
+            </select>
         </span>
         <div style="clear:both"></div>
+
 
         {{-- <span class="field">
             Jabatan <span style="color:red;">*</span>
@@ -40,13 +61,6 @@
         </span>
         <div style="clear:both"></div> --}}
 
-        <span class="field">
-            Alamat Email <span style="color:red;">*</span>
-        </span>
-        <span class="content">
-            <input type="email" class="isian" name="email" id="email">
-        </span>
-        <div style="clear:both"></div>
 
         <span class="field">
             Nomor Handphone (Whatsapp) <span style="color:red;">*</span>
@@ -106,7 +120,7 @@
         }
         if (localStorage.getItem('institution_siva')) {
             $('#instansi').val(localStorage.getItem('institution_siva'));
-            $('#instansi').attr('readonly', 'readonly');
+            // $('#instansi').attr('readonly', 'readonly');
         }
         if (localStorage.getItem('email_siva')) {
             $('#email').val(localStorage.getItem('email_siva'));
