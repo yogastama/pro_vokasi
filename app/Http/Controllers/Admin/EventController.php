@@ -10,6 +10,7 @@ use App\Models\EventParticipantModel;
 use App\Models\EventTargetModel;
 use DataTables;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use QrCode;
 
@@ -116,8 +117,18 @@ class EventController extends Controller
                 switch ($type_event) {
                     case 'hybrid':
                         $button .= "
-                                <a href='" . route('voyager.events.send_link_zoom', ['id_participant' => $row->id]) . "' class='btn btn-primary'>Kirim ulang link zoom</a>
-                                <a href='" . route('voyager.events.send_qr_code', ['id_participant' => $row->id]) . "' class='btn btn-warning btn-send-qr'>Kirim ulang undangan QR Code</a>
+                                <a href='" . route('voyager.events.send_link_zoom', ['id_participant' => $row->id]) . "' class='btn btn-primary btn-send-qr'>Kirim link zoom</a>
+                                <a href='" . route('voyager.events.send_qr_code', ['id_participant' => $row->id]) . "' class='btn btn-warning btn-send-qr'>Kirim undangan QR Code</a>
+                            ";
+                        break;
+                    case 'online':
+                        $button .= "
+                                <a href='" . route('voyager.events.send_link_zoom', ['id_participant' => $row->id]) . "' class='btn btn-primary btn-send-qr'>Kirim link zoom</a>
+                            ";
+                        break;
+                    case 'offline':
+                        $button .= "
+                                <a href='" . route('voyager.events.send_qr_code', ['id_participant' => $row->id]) . "' class='btn btn-warning btn-send-qr'>Kirim undangan QR Code</a>
                             ";
                         break;
 
@@ -153,7 +164,7 @@ class EventController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => 'token=' . $token . '&file=' . $results['results'] . '&number=' . $phone . '&caption=' . "Halo, " . $participant->name . ', berikut adalah tiket kamu untuk datang ke lokasi event "' . $event->title . '" pada ' . date('d M Y H:i', strtotime($event->start_event)) . '-' . date('d M Y H:i', strtotime($event->close_event)) . ' ya!',
+            CURLOPT_POSTFIELDS => 'token=' . $token . '&file=' . $results['results'] . '&number=' . $phone . '&caption=' . "Yth Bapak/Ibu " . $participant->name . ', berikut adalah tiket untuk datang ke lokasi event "' . $event->title . '" pada ' . date('d M Y H:i', strtotime($event->start_event)) . '-' . date('d M Y H:i', strtotime($event->close_event)) . '. Bapak/Ibu dapat menunjukan tiket beserta qr code untuk absensi kehadiran. Terima kasih!',
         ));
         $response = curl_exec($curl);
         curl_close($curl);
@@ -192,10 +203,11 @@ class EventController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => 'token=' . $token . '&file=' . url('/storage') . '/' . $event->header . '&number=' . $phone . '&caption=' . "Halo, " . $participant->name . ', dibawah ini adalah link zoom untuk hadir di event "' . $event->title . '" pada ' . date('d M Y H:i', strtotime($event->start_event)) . '-' . date('d M Y H:i', strtotime($event->close_event)) . ' ya!&date=' . date('Y-m-d') . '&time=' . date('H:i:s'),
+            CURLOPT_POSTFIELDS => 'token=' . $token . '&file=' . url('/storage') . '/' . $event->header . '&number=' . $phone . '&caption=' . "Yth Bapak/Ibu " . $participant->name . ', dibawah ini adalah link zoom untuk hadir di event "' . $event->title . '" pada ' . date('d M Y H:i', strtotime($event->start_event)) . '-' . date('d M Y H:i', strtotime($event->close_event)) . ' ya!&date=' . date('Y-m-d') . '&time=' . date('H:i:s'),
         ));
         $response = curl_exec($curl);
         curl_close($curl);
+        Log::info('text zoom' . $participant->phone_number, json_decode($response, true));
         $response = json_decode($response, true);
 
         $curl = curl_init();
@@ -208,10 +220,11 @@ class EventController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => 'token=' . $token . '&number=' . $phone . '&link=' . $event->link_zoom . '&date=' . date('Y-m-d') . '&time=' . date('H:i:s', strtotime('+30 seconds')),
+            CURLOPT_POSTFIELDS => 'token=' . $token . '&number=' . $phone . '&link=' . $event->link_zoom . '&date=' . date('Y-m-d') . '&time=' . date('H:i:s', strtotime('+10 seconds')),
         ));
         $response = curl_exec($curl);
         curl_close($curl);
+        Log::info('text zoom link' . $participant->phone_number, json_decode($response, true));
         $response = json_decode($response, true);
         if ($response['result']) {
             $participant->update([

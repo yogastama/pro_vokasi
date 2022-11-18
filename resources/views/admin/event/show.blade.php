@@ -253,11 +253,11 @@
                 data: 'institution',
                 name: 'institution'
             }, {
-                data: 'is_sent_qr',
-                name: 'is_sent_qr'
-            }, {
                 data: 'is_sent_zoom_link',
                 name: 'is_sent_zoom_link'
+            }, {
+                data: 'is_sent_qr',
+                name: 'is_sent_qr'
             }, {
                 data: 'action',
                 name: 'action',
