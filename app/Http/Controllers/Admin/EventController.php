@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\EventParticipant\AllExport;
 use App\Http\Controllers\Controller;
 use App\Mail\InvitationMail;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use DataTables;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use QrCode;
 
 class EventController extends Controller
@@ -258,5 +260,10 @@ class EventController extends Controller
             'alert-type' => 'success',
             'message' => 'Success update event targets!'
         ]);
+    }
+    public function download_participant($event)
+    {
+        $event = EventModel::find($event);
+        return Excel::download(new AllExport($event->id), $event->title . '.xlsx');
     }
 }

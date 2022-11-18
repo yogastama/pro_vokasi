@@ -7,6 +7,11 @@
 <div class="page-content container-fluid">
     <div class="row">
         <div class="col-xs-12">
+            <a href="{{ route('voyager.events.download_participant', ['event' => $event->id]) }}" class="btn btn-primary">
+                Download Participants
+            </a>
+        </div>
+        <div class="col-xs-12">
             <div class="panel">
                 <div class="panel-body">
                     <div>
