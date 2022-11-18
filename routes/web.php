@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\EventScannerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Ivw\AccountController as IvwAccountController;
 use App\Http\Controllers\Ivw\HomeController as IvwHomeController;
@@ -83,4 +84,8 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
     Route::get('/', [DashboardController::class, 'index'])->name('voyager.dashboard');
     Route::get('/table_list_participants', [DashboardController::class, 'table_list_participants'])->name('voyager.table_list_participants');
+    Route::group(['prefix' => 'scanner'], function () {
+        Route::get('/', [EventScannerController::class, 'index']);
+        Route::post('/present_event', [EventScannerController::class, 'present_event'])->name('scanner.present_event');
+    });
 });
