@@ -106,6 +106,19 @@
                             </div>
                             <div role="tabpanel" class="tab-pane" id="dashboard">
                                 <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label for="filter_date">Filter Date</label>
+                                            <select name="filter_date" id="filter_date" class="form-control">
+                                                <option value="all">All</option>
+                                                @foreach($period as $date)
+                                                <option {{ $date->format('Y-m-d') == request()->get('date') ? 'selected' : '' }} value="{{ $date->format('Y-m-d') }}">{{ $date->format('d M Y') }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-xs-3">
                                         <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
                                             <h2>
@@ -428,7 +441,7 @@
         var tableHadirOffline = $('#table-hadir').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('voyager.events.table_hadir_event_offline', ['event' => $event->id]) }}",
+            ajax: "{{ route('voyager.events.table_hadir_event_offline', ['event' => $event->id, 'date' => request()->get('date', 'all')]) }}",
             columns: [{
                 data: 'name',
                 name: 'name'
@@ -452,7 +465,7 @@
         var tableTidakHadir = $('#table-tidak-hadir').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('voyager.events.table_tidak_hadir_event_offline', ['event' => $event->id]) }}",
+            ajax: "{{ route('voyager.events.table_tidak_hadir_event_offline', ['event' => $event->id, 'date' => request()->get('date', 'all')]) }}",
             columns: [{
                 data: 'name',
                 name: 'name'
@@ -477,6 +490,11 @@
         if (confirm('Apakah anda yakin ingin melakukan verifikasi')) {
             window.location = $(this).attr('href');
         }
+    });
+    $('#filter_date').change(function (e) { 
+        e.preventDefault();
+        let url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?date=' + $(this).val();
+        window.location.href = url;
     });
 </script>
 @endsection

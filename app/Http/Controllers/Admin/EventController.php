@@ -21,7 +21,7 @@ use Yajra\DataTables\QueryDataTable;
 
 class EventController extends Controller
 {
-    public function show($event)
+    public function show($event, Request $request)
     {
         $event = EventModel::with('category_event')->find($event);
         $targetParticipants = [
@@ -32,6 +32,11 @@ class EventController extends Controller
             'unit_pemerintah_daerah' => EventTargetModel::where('event_id', $event->id)->where('key', 'unit_pemerintah_daerah')->first(),
             'lainnya' => EventTargetModel::where('event_id', $event->id)->where('key', 'lainnya')->first(),
         ];
+        $period = new \DatePeriod(
+            new \DateTime($event->start_event),
+            new \DateInterval('P1D'),
+            new \DateTime($event->close_event)
+        );
         $data = [
             'event' => $event,
             'target_participants' => $targetParticipants,
@@ -39,7 +44,9 @@ class EventController extends Controller
             'total_peserta_hadir' => count(DB::select(
                 "SELECT id 
                 FROM attendance_participants 
-                WHERE id_event = $event->id 
+                WHERE id_event = $event->id "
+                    . ($request->get('date') != 'all' ? "AND created_at LIKE '%" . $request->get('date') . "%'" : '') .
+                    "
                 GROUP BY id_participant, id_event"
             )),
             'total_peserta_tidak_hadir' => count(DB::select(
@@ -49,12 +56,15 @@ class EventController extends Controller
                 AND NOT EXISTS (
                     SELECT NULL FROM attendance_participants
                     WHERE attendance_participants.id_event = $event->id
-                    AND attendance_participants.id_participant = event_participants.id
+                    AND attendance_participants.id_participant = event_participants.id "
+                    . ($request->get('date') != 'all' ? "AND attendance_participants.created_at LIKE '%" . $request->get('date') . "%'" : '') .
+                    "
                 )"
             )),
             'total_peserta_undangan_offline' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', 'yes')->where('is_sent_zoom_link', null)->count(),
             'total_peserta_undangan_online' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', null)->where('is_sent_zoom_link', 'yes')->count(),
             'total_peserta_undangan_keduanya' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', 'yes')->where('is_sent_zoom_link', 'yes')->count(),
+            'period' => $period
         ];
         return view('admin.event.show', $data);
     }
@@ -261,17 +271,20 @@ class EventController extends Controller
             ->where('attendance_participants.id', '!=', null)
             ->groupBy('attendance_participants.id_participant', 'attendance_participants.id_event')
             ->select(['event_participants.*', DB::raw('attendance_participants.created_at as hadir')]);
-
+        if($request->get('date') != 'all'){
+            $data = $data->where('attendance_participants.created_at', 'LIKE', '%'.$request->get('date').'%');
+        }
         return (new QueryDataTable($data))->toJson();
     }
     public function table_tidak_hadir_event_offline($event, Request $request)
     {
+        $date = $request->get('date');
         $data = DB::table('event_participants')
             ->where('event_id', '=', $event)
-            ->whereNotExists(function ($query) use ($event) {
+            ->whereNotExists(function ($query) use ($event, $date) {
                 $query->select(DB::raw(1))
                     ->from('attendance_participants')
-                    ->whereRaw('attendance_participants.id_participant = event_participants.id AND attendance_participants.id_event = ' . $event);
+                    ->whereRaw(($date != 'all' ? 'attendance_participants.created_at LIKE "%'.$date.'%" AND' : '') . ' attendance_participants.id_participant = event_participants.id AND attendance_participants.id_event = ' . $event);
             });
 
         return (new QueryDataTable($data))->toJson();
