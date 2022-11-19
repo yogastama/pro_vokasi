@@ -26,6 +26,9 @@
             <th style="background: yellow;">
                 <b>Status Hadir Offline</b>
             </th>
+            <th style="background: yellow;">
+                <b>Tanggal Hadir</b>
+            </th>
             @endif
         </tr>
     </thead>
@@ -45,6 +48,9 @@
             @if($hadir)
             <td style="background-color: green">
                 yes
+            </td>
+            <td style="background-color: green">
+                {{ $hadir->created_at }}
             </td>
             @else
             <td></td>
