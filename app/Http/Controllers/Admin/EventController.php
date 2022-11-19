@@ -5,16 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\EventParticipant\AllExport;
 use App\Http\Controllers\Controller;
 use App\Mail\InvitationMail;
+use App\Models\AttendanceParticipantModel;
 use Illuminate\Http\Request;
 use App\Models\EventModel;
 use App\Models\EventParticipantModel;
 use App\Models\EventTargetModel;
 use DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use QrCode;
+use Yajra\DataTables\QueryDataTable;
 
 class EventController extends Controller
 {
@@ -31,45 +34,29 @@ class EventController extends Controller
         ];
         $data = [
             'event' => $event,
-            'target_participants' => $targetParticipants
+            'target_participants' => $targetParticipants,
+            'total_event_participants' => EventParticipantModel::where('event_id', $event->id)->count(),
+            'total_peserta_hadir' => count(DB::select(
+                "SELECT id 
+                FROM attendance_participants 
+                WHERE id_event = $event->id 
+                GROUP BY id_participant, id_event"
+            )),
+            'total_peserta_tidak_hadir' => count(DB::select(
+                "SELECT event_participants.id
+                FROM event_participants
+                WHERE event_participants.event_id = $event->id
+                AND NOT EXISTS (
+                    SELECT NULL FROM attendance_participants
+                    WHERE attendance_participants.id_event = $event->id
+                    AND attendance_participants.id_participant = event_participants.id
+                )"
+            )),
+            'total_peserta_undangan_offline' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', 'yes')->where('is_sent_zoom_link', null)->count(),
+            'total_peserta_undangan_online' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', null)->where('is_sent_zoom_link', 'yes')->count(),
+            'total_peserta_undangan_keduanya' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', 'yes')->where('is_sent_zoom_link', 'yes')->count(),
         ];
         return view('admin.event.show', $data);
-    }
-    private function createTicket($img1 = '', $img2 = '', $img3 = '', $ticket_id = '')
-    {
-        header('Content-Type: image/png');
-        $targetFolder = public_path('/images/');
-        $targetPath = $targetFolder;
-
-        $outputImage = imagecreatetruecolor(800, 1400);
-
-        $white = imagecolorallocate($outputImage, 255, 255, 255);
-        imagefill($outputImage, 0, 0, $white);
-
-        $first = imagecreatefrompng($img1);
-        $second = imagecreatefrompng($img2);
-        $third = imagecreatefrompng($img3);
-
-        imagecopyresized(
-            $outputImage,
-            $first,
-            0,
-            0,
-            0,
-            0,
-            782,
-            707,
-            782,
-            707
-        );
-        imagecopyresized($outputImage, $second, 260, 787, 0, 0, 300, 300, 300, 300);
-        imagecopyresized($outputImage, $third, 0, 1187, 0, 0, 782, 707, 782, 707);
-
-        $filename = $targetPath . $ticket_id . '.png';
-        imagepng($outputImage, $filename);
-
-        imagedestroy($outputImage);
-        return $filename;
     }
     public function get_waiting_verify($id_event, $type_event)
     {
@@ -265,5 +252,28 @@ class EventController extends Controller
     {
         $event = EventModel::find($event);
         return Excel::download(new AllExport($event->id), $event->title . '.xlsx');
+    }
+    public function table_hadir_event_offline($event, Request $request)
+    {
+        $data = DB::table('event_participants')
+            ->where('event_id', '=', $event)
+            ->leftJoin('attendance_participants', 'attendance_participants.id_participant', '=', 'event_participants.id')
+            ->where('attendance_participants.id', '!=', null)
+            ->groupBy('attendance_participants.id_participant', 'attendance_participants.id_event')
+            ->select(['event_participants.*', DB::raw('attendance_participants.created_at as hadir')]);
+
+        return (new QueryDataTable($data))->toJson();
+    }
+    public function table_tidak_hadir_event_offline($event, Request $request)
+    {
+        $data = DB::table('event_participants')
+            ->where('event_id', '=', $event)
+            ->whereNotExists(function ($query) use ($event) {
+                $query->select(DB::raw(1))
+                    ->from('attendance_participants')
+                    ->whereRaw('attendance_participants.id_participant = event_participants.id AND attendance_participants.id_event = ' . $event);
+            });
+
+        return (new QueryDataTable($data))->toJson();
     }
 }

@@ -10,4 +10,8 @@ class EventParticipantModel extends Model
     use SoftDeletes;
     protected $table = 'event_participants';
     protected $guarded = [];
+    public function attendance_participant()
+    {
+        return $this->hasOne(AttendanceParticipantModel::class, 'id_participant', 'id');
+    }
 }

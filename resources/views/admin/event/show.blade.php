@@ -1,5 +1,13 @@
 @extends('admin.layouts.layout')
 
+@section('head')
+<style>
+    table {
+        width: 100% !important;
+    }
+</style>
+@endsection
+
 @section('content_html')
 <h1 class="page-title">
     <i class="voyager-brush"></i> Event {{ $event->title }}
@@ -18,6 +26,7 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">Detail</a></li>
+                            <li role="presentation"><a href="#dashboard" aria-controls="dashboard" role="tab" data-toggle="tab">Dashboard</a></li>
                             <li role="presentation"><a href="#target-participants" aria-controls="target-participants" role="tab" data-toggle="tab">Target Participants</a></li>
                             <li role="presentation"><a href="#waiting-verify" aria-controls="waiting-verify" role="tab" data-toggle="tab">Waiting Verify</a></li>
                             <li role="presentation"><a href="#verified-user" aria-controls="verified-user" role="tab" data-toggle="tab">Verified User</a></li>
@@ -77,6 +86,14 @@
                                     </tr>
                                     <tr>
                                         <th>
+                                            Link Zoom
+                                        </th>
+                                        <td>
+                                            <a target="_blank" href="{{ $event->link_zoom }}">{{ $event->link_zoom }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
                                             Banner
                                         </th>
                                         <td>
@@ -86,6 +103,143 @@
                                 </table>
                                 <hr>
                                 {!! $event->content !!}
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="dashboard">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                            <h2>
+                                                {{ $total_event_participants }}
+                                            </h2>
+                                            <p>
+                                                Total peserta
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @if($event->type_event == 'hybrid' || $event->type_event == 'offline')
+                                    <div class="col-xs-3">
+                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                            <h2>
+                                                {{ $total_peserta_hadir }}
+                                            </h2>
+                                            <p>
+                                                Total peserta hadir
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                            <h2>
+                                                {{ $total_peserta_tidak_hadir }}
+                                            </h2>
+                                            <p>
+                                                Total peserta tidak hadir
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                            <h2>
+                                                {{ $total_peserta_undangan_offline }}
+                                            </h2>
+                                            <p>
+                                                Total peserta dikirimkan undangan offline
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @if($event->type_event == 'hybrid' || $event->type_event == 'online')
+                                    <div class="col-xs-3">
+                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                            <h2>
+                                                {{ $total_peserta_undangan_online }}
+                                            </h2>
+                                            <p>
+                                                Total peserta dikirimkan link zoom
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @if($event->type_event == 'hybrid')
+                                    <div class="col-xs-3">
+                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                            <h2>
+                                                {{ $total_peserta_undangan_keduanya }}
+                                            </h2>
+                                            <p>
+                                                Total peserta dikirimkan undangan offline & link zoom
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                                @if($event->type_event == 'hybrid' || $event->type_event == 'offline')
+                                <div class="row">
+                                    <div class="col-xs-12 ">
+                                        <h3>
+                                            List kehadiran
+                                        </h3>
+                                        <hr>
+                                        <div class="table-responsive">
+
+                                            <table class="table table-bordered" id="table-hadir">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Nama
+                                                        </th>
+                                                        <th>
+                                                            Jenis institusi
+                                                        </th>
+                                                        <th>
+                                                            Institusi
+                                                        </th>
+                                                        <th>
+                                                            Email
+                                                        </th>
+                                                        <th>
+                                                            No telepon
+                                                        </th>
+                                                        <th>
+                                                            Tanggal hadir
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 ">
+                                        <h3>
+                                            List tidak hadir
+                                        </h3>
+                                        <hr>
+                                        <div class="table-responsive">
+
+                                            <table class="table table-bordered" id="table-tidak-hadir">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Nama
+                                                        </th>
+                                                        <th>
+                                                            Jenis institusi
+                                                        </th>
+                                                        <th>
+                                                            Institusi
+                                                        </th>
+                                                        <th>
+                                                            Email
+                                                        </th>
+                                                        <th>
+                                                            No telepon
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                             <div role="tabpanel" class="tab-pane" id="target-participants">
                                 <form action="{{ route('voyager.events.update_target_participants', ['id_event' => $event->id]) }}" id="form-target-participants" method="POST">
@@ -270,6 +424,53 @@
                 searchable: false
             }, ]
         });
+        @if($event->type_event == 'hybrid' || $event->type_event == 'offline')
+        var tableHadirOffline = $('#table-hadir').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('voyager.events.table_hadir_event_offline', ['event' => $event->id]) }}",
+            columns: [{
+                data: 'name',
+                name: 'name'
+            }, {
+                data: 'institution_type',
+                name: 'institution_type'
+            }, {
+                data: 'institution',
+                name: 'institution'
+            }, {
+                data: 'email',
+                name: 'email'
+            }, {
+                data: 'phone_number',
+                name: 'phone_number'
+            }, {
+                data: 'hadir',
+                name: 'hadir'
+            }, ]
+        });
+        var tableTidakHadir = $('#table-tidak-hadir').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('voyager.events.table_tidak_hadir_event_offline', ['event' => $event->id]) }}",
+            columns: [{
+                data: 'name',
+                name: 'name'
+            }, {
+                data: 'institution_type',
+                name: 'institution_type'
+            }, {
+                data: 'institution',
+                name: 'institution'
+            }, {
+                data: 'email',
+                name: 'email'
+            }, {
+                data: 'phone_number',
+                name: 'phone_number'
+            }, ]
+        });
+        @endif
     });
     $(document).on('click', '.btn-send-qr', function(e) {
         e.preventDefault();

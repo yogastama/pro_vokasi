@@ -22,6 +22,11 @@
             <th style="background: yellow;">
                 <b>Kirim Qr Code</b>
             </th>
+            @if($event->type_event == 'hybrid')
+            <th style="background: yellow;">
+                <b>Status Hadir Offline</b>
+            </th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -34,6 +39,16 @@
             <td>{{ $participant->institution }}</td>
             <td>{{ $participant->is_sent_zoom_link }}</td>
             <td>{{ $participant->is_sent_qr }}</td>
+            @php
+            $hadir = \App\Models\AttendanceParticipantModel::where('id_event', $participant->event_id)->where('id_participant', $participant->id)->first();
+            @endphp
+            @if($hadir)
+            <td style="background-color: green">
+                yes
+            </td>
+            @else
+            <td></td>
+            @endif
         </tr>
         @endforeach
     </tbody>

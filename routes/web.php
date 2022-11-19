@@ -75,6 +75,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'events'], function () {
         Route::get('/{event}', [AdminEventController::class, 'show'])->name('voyager.events.show');
         Route::get('/download_participant/{event}', [AdminEventController::class, 'download_participant'])->name('voyager.events.download_participant');
+        Route::get('/table_hadir_event_offline/{event}', [AdminEventController::class, 'table_hadir_event_offline'])->name('voyager.events.table_hadir_event_offline');
+        Route::get('/table_tidak_hadir_event_offline/{event}', [AdminEventController::class, 'table_tidak_hadir_event_offline'])->name('voyager.events.table_tidak_hadir_event_offline');
         Route::get('/get_waiting_verify/{event}/{type_event}', [AdminEventController::class, 'get_waiting_verify'])->name('voyager.events.get_waiting_verify');
         Route::get('/get_verified/{event}/{type_event}', [AdminEventController::class, 'get_verified'])->name('voyager.events.get_verified');
         Route::get('/send_qr_code/{id_participant}', [AdminEventController::class, 'send_qr_code'])->name('voyager.events.send_qr_code');
