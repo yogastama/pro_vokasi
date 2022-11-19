@@ -119,72 +119,114 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-3">
-                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
-                                            <h2>
-                                                {{ $total_event_participants }}
-                                            </h2>
-                                            <p>
-                                                Total peserta
-                                            </p>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <h3>
+                                            Counter
+                                        </h3>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                                    <h2>
+                                                        {{ $total_event_participants }}
+                                                    </h2>
+                                                    <p>
+                                                        Total peserta
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            @if($event->type_event == 'hybrid' || $event->type_event == 'offline')
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                                    <h2>
+                                                        {{ $total_peserta_hadir }}
+                                                    </h2>
+                                                    <p>
+                                                        Total peserta hadir
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                                    <h2>
+                                                        {{ $total_peserta_tidak_hadir }}
+                                                    </h2>
+                                                    <p>
+                                                        Total peserta tidak hadir
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                                    <h2>
+                                                        {{ $total_peserta_undangan_offline }}
+                                                    </h2>
+                                                    <p>
+                                                        Total peserta dikirimkan undangan offline
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @if($event->type_event == 'hybrid' || $event->type_event == 'online')
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                                    <h2>
+                                                        {{ $total_peserta_undangan_online }}
+                                                    </h2>
+                                                    <p>
+                                                        Total peserta dikirimkan link zoom
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @if($event->type_event == 'hybrid')
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                                    <h2>
+                                                        {{ $total_peserta_undangan_keduanya }}
+                                                    </h2>
+                                                    <p>
+                                                        Total peserta dikirimkan undangan offline & link zoom
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
-                                    @if($event->type_event == 'hybrid' || $event->type_event == 'offline')
-                                    <div class="col-xs-3">
-                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
-                                            <h2>
-                                                {{ $total_peserta_hadir }}
-                                            </h2>
-                                            <p>
-                                                Total peserta hadir
-                                            </p>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <h3>
+                                            Instansi & total terdaftar
+                                        </h3>
+                                        <hr>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="table-instansi">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            No
+                                                        </th>
+                                                        <th>
+                                                            Instance
+                                                        </th>
+                                                        <th>
+                                                            Total
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($instansi as $item)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $loop->iteration }}
+                                                        </td>
+                                                        <td>{{ $item->institution }}</td>
+                                                        <td>{{ $item->total }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="col-xs-3">
-                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
-                                            <h2>
-                                                {{ $total_peserta_tidak_hadir }}
-                                            </h2>
-                                            <p>
-                                                Total peserta tidak hadir
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
-                                            <h2>
-                                                {{ $total_peserta_undangan_offline }}
-                                            </h2>
-                                            <p>
-                                                Total peserta dikirimkan undangan offline
-                                            </p>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if($event->type_event == 'hybrid' || $event->type_event == 'online')
-                                    <div class="col-xs-3">
-                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
-                                            <h2>
-                                                {{ $total_peserta_undangan_online }}
-                                            </h2>
-                                            <p>
-                                                Total peserta dikirimkan link zoom
-                                            </p>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if($event->type_event == 'hybrid')
-                                    <div class="col-xs-3">
-                                        <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
-                                            <h2>
-                                                {{ $total_peserta_undangan_keduanya }}
-                                            </h2>
-                                            <p>
-                                                Total peserta dikirimkan undangan offline & link zoom
-                                            </p>
-                                        </div>
-                                    </div>
-                                    @endif
                                 </div>
                                 @if($event->type_event == 'hybrid' || $event->type_event == 'offline')
                                 <div class="row">
@@ -484,6 +526,15 @@
             }, ]
         });
         @endif
+        $('#table-instansi').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
     });
     $(document).on('click', '.btn-send-qr', function(e) {
         e.preventDefault();

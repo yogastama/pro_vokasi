@@ -4,157 +4,138 @@
 
 @section('content_html')
 <div class="container-fluid" style="margin-top: 20px;">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3>
-                                Dashboard App
-                            </h3>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="panel" style="background: rgb(104, 212, 255);color:#fff;">
-                                <div class="panel-body">
-                                    <b>
-                                        TOTAL USER TERDAFTAR
-                                    </b>
-                                    <h3>
-                                        {{ $total_user_customer }}
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label for="event">Event</label>
+                        <select name="event" id="event" class="form-control select2">
+                            <option value="all">All</option>
+                            @foreach ($events as $item)
+                            <option value="{{ $item->id }}" {{ request()->get('event_id') == $item->id ? 'selected' : '' }}>
+                                {{ $item->title }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
+                <div class="col-xs-12">
+                    <hr>
+                </div>
             </div>
-        </div>
-        <div class="col-md-8">
-            <div class="panel">
-                <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <h3>
+                        Counter
+                    </h3>
+                    <hr>
                     <div class="row">
-                        <div class="col-xs-12">
-                            <h3>
-                                Dashboard Event
-                            </h3>
-                            <hr>
+                        <div class="col-xs-12 col-sm-6">
+                            <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                <h2>
+                                    {{ $total_event_participants }}
+                                </h2>
+                                <p>
+                                    Total peserta
+                                </p>
+                            </div>
                         </div>
+                        @if(request()->get('event_id') != 'all')
+                            @if($event->type_event == 'hybrid' || $event->type_event == 'offline')
+                            <div class="col-xs-12 col-sm-6">
+                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                    <h2>
+                                        {{ $total_peserta_hadir }}
+                                    </h2>
+                                    <p>
+                                        Total peserta hadir
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                    <h2>
+                                        {{ $total_peserta_tidak_hadir }}
+                                    </h2>
+                                    <p>
+                                        Total peserta tidak hadir
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                    <h2>
+                                        {{ $total_peserta_undangan_offline }}
+                                    </h2>
+                                    <p>
+                                        Total peserta dikirimkan undangan offline
+                                    </p>
+                                </div>
+                            </div>
+                            @endif
+                        @endif
+                        @if(request()->get('event_id') != 'all')
+                            @if($event->type_event == 'hybrid' || $event->type_event == 'online')
+                            <div class="col-xs-12 col-sm-6">
+                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                    <h2>
+                                        {{ $total_peserta_undangan_online }}
+                                    </h2>
+                                    <p>
+                                        Total peserta dikirimkan link zoom
+                                    </p>
+                                </div>
+                            </div>
+                            @endif
+                        @endif
+                        @if(request()->get('event_id') != 'all')
+                            @if($event->type_event == 'hybrid')
+                            <div class="col-xs-12 col-sm-6">
+                                <div style="padding: 10px;border:1px solid #111;border-radius:10px;">
+                                    <h2>
+                                        {{ $total_peserta_undangan_keduanya }}
+                                    </h2>
+                                    <p>
+                                        Total peserta dikirimkan undangan offline & link zoom
+                                    </p>
+                                </div>
+                            </div>
+                            @endif
+                        @endif
                     </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label for="event">Event</label>
-                                <select name="event" id="event" class="form-control select2">
-                                    @foreach ($events as $item)
-                                    <option value="{{ $item->id }}" {{ $event->id == $item->id ? 'selected' : '' }}>
-                                        {{ $item->title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="panel" style="background: rgb(104, 212, 255);color:#fff;">
-                                        <div class="panel-body">
-                                            <b>
-                                                JUMLAH PENDAFTAR
-                                            </b>
-                                            <h3>
-                                                {{ $jumlah_pendaftar_event }}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="panel" style="background: rgb(104, 212, 255);color:#fff;">
-                                        <div class="panel-body">
-                                            <b>
-                                                TOTAL PENDAFTAR DALAM 3 HARI TERAKHIR
-                                            </b>
-                                            <h3>
-                                                {{ $jumlah_pendaftar_event_3_hari_terakhir }}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <b>
-                                INSTANSI & TOTAL TERDAFTAR
-                            </b>
-                            <hr>
-                            <table class="table table-bordered" id="table-list-instance">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            No
-                                        </th>
-                                        <th>
-                                            Instance
-                                        </th>
-                                        <th>
-                                            Total
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($instance_with_total_users as $item)
-                                    <tr>
-                                        <td>
-                                            {{ $loop->iteration }}
-                                        </td>
-                                        <td>{{ $item->institution }}</td>
-                                        <td>{{ $item->total }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <b>
-                                PESERTA
-                            </b>
-                            <hr>
-                            <div class="alert alert-warning">
-                                Jika anda ingin menghapus peserta, anda bisa masuk ke detail peserta tersebut.
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="table-list-peserta">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Nama
-                                            </th>
-                                            <th>
-                                                Email
-                                            </th>
-                                            <th>
-                                                Phone
-                                            </th>
-                                            <th>
-                                                Gender
-                                            </th>
-                                            <th>
-                                                Instansi
-                                            </th>
-                                            <th>
-                                                Mendaftar pada
-                                            </th>
-                                            <th>
-                                                Actions
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <h3>
+                        Instansi & total terdaftar
+                    </h3>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="table-instansi">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        No
+                                    </th>
+                                    <th>
+                                        Instance
+                                    </th>
+                                    <th>
+                                        Total
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($instansi as $item)
+                                <tr>
+                                    <td>
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td>{{ $item->institution }}</td>
+                                    <td>{{ $item->total }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -170,7 +151,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 <script>
-    $('#table-list-instance').DataTable({
+    $('#table-instansi').DataTable({
         dom: 'Bfrtip',
         buttons: [
             'copyHtml5',

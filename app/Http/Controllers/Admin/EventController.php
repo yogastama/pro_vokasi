@@ -37,6 +37,16 @@ class EventController extends Controller
             new \DateInterval('P1D'),
             new \DateTime($event->close_event)
         );
+        $instansi = DB::select("
+            SELECT
+                event_participants.institution,
+                count(event_participants.id) as total
+            FROM event_participants
+            WHERE event_participants.event_id = $event->id
+            AND event_participants.deleted_at IS NULL
+            GROUP BY event_participants.institution
+            ORDER BY total DESC
+        ");
         $data = [
             'event' => $event,
             'target_participants' => $targetParticipants,
@@ -64,7 +74,8 @@ class EventController extends Controller
             'total_peserta_undangan_offline' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', 'yes')->where('is_sent_zoom_link', null)->count(),
             'total_peserta_undangan_online' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', null)->where('is_sent_zoom_link', 'yes')->count(),
             'total_peserta_undangan_keduanya' => EventParticipantModel::where('event_id', $event->id)->where('is_sent_qr', 'yes')->where('is_sent_zoom_link', 'yes')->count(),
-            'period' => $period
+            'period' => $period,
+            'instansi' => $instansi
         ];
         return view('admin.event.show', $data);
     }
