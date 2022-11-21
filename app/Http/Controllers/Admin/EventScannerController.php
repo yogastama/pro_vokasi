@@ -16,7 +16,12 @@ class EventScannerController extends Controller
     public function present_event(Request $request)
     {
         $code = $request->post('code');
-        $code = explode('-', $code);
+        if (strpos($code, '-') !== false) {
+            $code = explode('-', $code);
+        } else {
+            $code = explode('½', $code);
+        }
+        
         $id_participant = $code[0];
         $id_event = $code[1];
 
@@ -35,6 +40,7 @@ class EventScannerController extends Controller
         $attendance->ticket_id = $request->post('code');
         $attendance->time = date('d M Y H:i', strtotime($attendance->created_at));
         $attendance->name = $participant->name;
+        $attendance->institution = $participant->institution;
 
         return response()->json([
             'status' => 'OK',

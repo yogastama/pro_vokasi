@@ -157,7 +157,7 @@ class EventController extends Controller
         $event = EventModel::find($participant->event_id);
         $code = $participant->id . '-' . $participant->event_id;
         //* GENERATE BARCODE
-        $response = Http::get("http://128.199.115.183/api/generate?code=$code");
+        $response = Http::get("http://128.199.115.183/api/generate?code=$code&header=" . url('/storage') . '/' . $event->header);
         $results = json_decode($response->body(), true);
 
         //* send whatsapp

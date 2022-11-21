@@ -455,6 +455,7 @@
     </nav>
     <div class="welcome-ticket d-none">
         <div>
+            <img src="{{ url('/images/logo/ivw2022.jpeg') }}" alt="logo" width="100px" style="margin-bottom: 30px;">
             <h1 style="font-size: 50px">
                 VALID
             </h1>
@@ -463,6 +464,9 @@
 
                 </h3>
             </div>
+            <p>
+                <span class="perusahaan-tiket"></span>
+            </p>
             <p>
                 <span class="no-tiket"></span>
             </p>
@@ -634,25 +638,29 @@
                             playSound('{{ url("/assets/not.mp3") }}');
                             setTimeout(() => {
                                 document.getElementById("scan-result-close").click()
-                            }, 3000);
+                            }, 5000);
                             setTimeout(() => {
                                 $('.error-ticket').addClass('d-none');
-                            }, 3000);
+                            }, 5000);
                         }
                     } else {
                         $('.welcome-ticket').removeClass('d-none');
                         $('.no-tiket').html(response.results.ticket_id);
+                        $('.perusahaan-tiket').html(response.results.institution);
                         $('.waktu-tiket').html(response.results.time);
                         $('.category-valid').html(response.results.name);
                         playSound('{{ url("/assets/check.mp3") }}');
                         setTimeout(() => {
                             document.getElementById("scan-result-close").click()
-                        }, 3000);
+                        }, 5000);
                         setInterval(() => {
                             $('.welcome-ticket').addClass('d-none');
-                        }, 3000);
+                        }, 5000);
                     }
                     barcode = ''
+                },
+                error: function(error){
+                    alert(JSON.stringify(error));
                 }
             });
         }
