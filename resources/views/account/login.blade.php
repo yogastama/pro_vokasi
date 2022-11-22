@@ -29,6 +29,10 @@
             <a href="{{ url('/accounts/register') }}" class="mt-4">
                 Belum punya akun? Daftar sini
             </a>
+            <br><br>
+            <a href="{{ url('/accounts/forget_password') }}" class="mt-4">
+                Lupa password? Reset disini
+            </a>
         </form>
     </div>
 </div>

@@ -21,6 +21,17 @@ class AccountController extends Controller
     {
         return view('account.login');
     }
+    public function forget_password()
+    {
+        return view('account.forget_password');
+    }
+    public function reset_password(Request $request)
+    {
+        $token = base64_decode($request->get('token'));
+        return view('account.reset_password', [
+            'token' => $token
+        ]);
+    }
     public function register()
     {
         $data = [
@@ -181,7 +192,8 @@ class AccountController extends Controller
         $agent = new \Jenssegers\Agent\Agent;
         $request->validate([
             'password' => 'required',
-            'konfirmasi_password' => 'required'
+            'konfirmasi_password' => 'required',
+            'token' => 'required'
         ]);
 
         $data = $request->all();

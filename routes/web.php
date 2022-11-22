@@ -70,6 +70,8 @@ Route::group(['prefix' => 'accounts'], function () {
     Route::get('/', [AccountController::class, 'index']);
     Route::get('/login', [AccountController::class, 'login']);
     Route::get('/register', [AccountController::class, 'register']);
+    Route::get('/forget_password', [AccountController::class, 'forget_password']);
+    Route::get('/reset_password', [AccountController::class, 'reset_password']);
     Route::post('/process_login', [AccountController::class, 'process_login'])->name('accounts.process_login');
     Route::post('/process_register', [AccountController::class, 'process_register'])->name('accounts.process_register');
     Route::post('/process_forget_password', [AccountController::class, 'process_forget_password'])->name('accounts.process_forget_password');
