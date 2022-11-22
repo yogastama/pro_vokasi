@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventParticipantModel;
 use App\Models\ProvinceModel;
 use App\Models\UserCustomerModel;
 use Illuminate\Http\Request;
@@ -136,6 +137,84 @@ class AccountController extends Controller
                 'results' => [],
                 'error_messages' => $th->getMessage()
             ], 400);
+        }
+    }
+    public function process_forget_password(Request $request)
+    {
+        $request->validate([
+            'email' => 'required'
+        ]);
+
+        $email = $request->post('email');
+        $eventParticipant = EventParticipantModel::where('email', $email)->first();
+        if(!$eventParticipant){
+            return redirect()->back()->with([
+                'alert-type' => 'error',
+                'message' => 'Akun tidak ditemukan!'
+            ]);
+        }
+        $token = "q8X2WDWZABbDRMNnSJn9UrRxVGtiWQo2SVQwA8TiHnmwNrM2X9";
+        $phone = $eventParticipant->phone_number;
+        $link = route('redirect.reset_password', ['token' => base64_encode($eventParticipant->id)]);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://app.ruangwa.id/api/send_link',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 'token=' . $token . '&number=' . $phone . '&link=' . $link . '&date=' . date('Y-m-d') . '&time=' . date('H:i:s'),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return redirect()->back()->with([
+            'alert-type' => 'success',
+            'message' => 'Link password sudah dikirimkan melalui WhatsApp!'
+        ]);
+    }
+    public function update_password(Request $request)
+    {
+        $agent = new \Jenssegers\Agent\Agent;
+        $request->validate([
+            'password' => 'required',
+            'konfirmasi_password' => 'required'
+        ]);
+
+        $data = $request->all();
+        if($data['password'] != $data['konfirmasi_password']){
+            return redirect()->back()->with([
+                'alert-type' => 'error',
+                'message' => 'Konfirmasi password tidak sama, harap ulangi!'
+            ]);
+        }
+        $token = $data['token'];
+        $eventParticipant = EventParticipantModel::find($token);
+        try {
+            $client = Http::post('https://siva.kemenperin.go.id/api/v1/pro_vokasi/auth/update_password', [
+                'email' => $eventParticipant->email,
+                'password' => $data['password']
+            ]);
+            $response = json_decode($client->body(), true);
+            if ($response['status'] == 'OK') {
+                return redirect()->to($agent->isMobile() ? '/accounts/login' : '/desktop/login')->with([
+                    'alert-type' => 'success',
+                    'message' => 'Password berhasil diperbarui, silakan login!'
+                ]);
+            } else {
+                return redirect()->back()->with([
+                    'alert-type' => 'error',
+                    'message' => 'Silakan ulangi!'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->with([
+                'alert-type' => 'error',
+                'message' => $th->getMessage()
+            ]);
         }
     }
 }

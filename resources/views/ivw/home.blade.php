@@ -113,6 +113,9 @@
                             </a>
                         </div>
                     </div>
+                    <div class="col-12 mt-2">
+                        <a href="{{ route('ivw.forget_password') }}" class="text-white">Lupa password? Reset disini</a>
+                    </div>
                 </div>
             </div>
         </div>

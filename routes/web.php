@@ -10,24 +10,17 @@ use App\Http\Controllers\Ivw\AccountController as IvwAccountController;
 use App\Http\Controllers\Ivw\HomeController as IvwHomeController;
 use App\Models\ProVokasiServiceModel;
 use App\Models\SliderModel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+//* DESKTOP ROUTES
 Route::group(['prefix' => 'desktop'], function () {
     Route::get('/', [IvwHomeController::class, 'index']);
     Route::get('/events', [IvwHomeController::class, 'events'])->name('ivw.events');
     Route::get('/accounts', [IvwAccountController::class, 'accounts'])->name('ivw.accounts');
     Route::get('/login', [IvwAccountController::class, 'login'])->name('ivw.login');
+    Route::get('/forget_password', [IvwAccountController::class, 'forget_password'])->name('ivw.forget_password');
+    Route::get('/reset_password', [IvwAccountController::class, 'reset_password'])->name('ivw.reset_password');
     Route::get('/register', [IvwAccountController::class, 'register'])->name('ivw.register');
     Route::get('/show/{id}', [IvwHomeController::class, 'show'])->name('ivw.show');
     Route::get('/event/{id}', [IvwHomeController::class, 'event'])->name('ivw.event.show');
@@ -35,6 +28,7 @@ Route::group(['prefix' => 'desktop'], function () {
     Route::get('/success_register_event/{id}/{participant_id}', [IvwHomeController::class, 'success_register_event'])->name('ivw.event.success_register_event');
 });
 
+//* MOBILE VERSION
 Route::get('/',  function () {
     $agent = new \Jenssegers\Agent\Agent;
 
@@ -51,6 +45,16 @@ Route::get('/',  function () {
         return redirect()->to('/desktop');
     }
 });
+Route::get('/reset_password', function(Request $request){
+    $agent = new \Jenssegers\Agent\Agent;
+
+    $result = $agent->isMobile();
+    if ($result) {
+        return redirect()->to('/accounts/reset_password?token=' . $request->get('token'));
+    } else {
+        return redirect()->to('/desktop/reset_password?token=' . $request->get('token'));
+    }
+})->name('redirect.reset_password');
 Route::group(['prefix' => 'events'], function () {
     Route::get('/', [EventController::class, 'index'])->name('event.index');
     Route::get('/{id}', [EventController::class, 'show'])->name('event.show');
@@ -68,9 +72,11 @@ Route::group(['prefix' => 'accounts'], function () {
     Route::get('/register', [AccountController::class, 'register']);
     Route::post('/process_login', [AccountController::class, 'process_login'])->name('accounts.process_login');
     Route::post('/process_register', [AccountController::class, 'process_register'])->name('accounts.process_register');
+    Route::post('/process_forget_password', [AccountController::class, 'process_forget_password'])->name('accounts.process_forget_password');
+    Route::post('/update_password', [AccountController::class, 'update_password'])->name('accounts.update_password');
 });
 
-
+//* ADMIN ROUTES
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'events'], function () {
         Route::get('/{event}', [AdminEventController::class, 'show'])->name('voyager.events.show');
