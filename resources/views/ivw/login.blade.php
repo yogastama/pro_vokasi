@@ -27,6 +27,9 @@
             <button type="submit" class="buttonreg register" value="Submit" style="border:0px solid;background-color:red;color:#ffffff !important;">
                 Masuk
             </button>
+            <br>
+            <br>
+            <a href="{{ url('/desktop/forget_password') }}">Lupa password? reset disini</a>
         </span>
 
 
