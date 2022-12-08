@@ -21,7 +21,7 @@ class EventController extends Controller
         if ($request->get('search')) {
             $events = $events->where('title', 'like', '%' . $request->get('search') . '%');
         }
-        $events = $events->where('is_active', 'active')->get();
+        $events = $events->where('is_active', 'active')->orderBy('created_at', 'desc')->get();
         $data = [
             'events' => $events
         ];

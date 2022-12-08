@@ -638,10 +638,10 @@
                             playSound('{{ url("/assets/not.mp3") }}');
                             setTimeout(() => {
                                 document.getElementById("scan-result-close").click()
-                            }, 5000);
+                            }, 8000);
                             setTimeout(() => {
                                 $('.error-ticket').addClass('d-none');
-                            }, 5000);
+                            }, 8000);
                         }
                     } else {
                         $('.welcome-ticket').removeClass('d-none');
@@ -652,10 +652,10 @@
                         playSound('{{ url("/assets/check.mp3") }}');
                         setTimeout(() => {
                             document.getElementById("scan-result-close").click()
-                        }, 5000);
+                        }, 8000);
                         setInterval(() => {
                             $('.welcome-ticket').addClass('d-none');
-                        }, 5000);
+                        }, 8000);
                     }
                     barcode = ''
                 },

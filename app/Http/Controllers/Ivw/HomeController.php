@@ -28,9 +28,16 @@ class HomeController extends Controller
     }
     public function events()
     {
-        $events = EventModel::has('response_event')->where('is_active', 'active')->get();
+        $events = EventModel::has('response_event')
+                    ->with('category_event')
+                    ->orderBy('created_at', 'desc')
+                    ->where('is_active', 'active')->get();
         $data = [
-            'events' => $events
+            'events' => array_map(function($row){
+                if($row->response_event){
+                    return $row;
+                }
+            }, $events)
         ];
         return view('ivw.events', $data);
     }

@@ -61,6 +61,7 @@
             <div class="form-group mt-3">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="password">
+                <small>Minimal panjang password : 3 karakter</small>
             </div>
             <div class="d-grid gap-2 mt-4 mb-3">
                 <button type="submit" class="btn btn-primary btn-lg">

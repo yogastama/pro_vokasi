@@ -80,6 +80,8 @@ Route::group(['prefix' => 'accounts'], function () {
 
 //* ADMIN ROUTES
 Route::group(['prefix' => 'admin'], function () {
+    Route::get('/events/{event}', [AdminEventController::class, 'show'])->name('voyager.events.show');
+    Voyager::routes();
     Route::group(['prefix' => 'events'], function () {
         Route::get('/{event}', [AdminEventController::class, 'show'])->name('voyager.events.show');
         Route::get('/download_participant/{event}', [AdminEventController::class, 'download_participant'])->name('voyager.events.download_participant');
@@ -91,7 +93,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/send_link_zoom/{id_participant}', [AdminEventController::class, 'send_link_zoom'])->name('voyager.events.send_link_zoom');
         Route::post('/update_target_participants/{id_event}', [AdminEventController::class, 'update_target_participants'])->name('voyager.events.update_target_participants');
     });
-    Voyager::routes();
     Route::get('/', [DashboardController::class, 'index'])->name('voyager.dashboard');
     Route::get('/table_list_participants', [DashboardController::class, 'table_list_participants'])->name('voyager.table_list_participants');
     Route::group(['prefix' => 'scanner'], function () {

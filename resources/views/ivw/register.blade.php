@@ -89,6 +89,7 @@
             <input type="password" class="isian" name="password" id="password">
         </span>
         <div style="clear:both"></div>
+        <small style="color: #fff">Minimal panjang password : 3 karakter</small>
 
         <span class="field nofield">&nbsp;</span>
         <div class="content">
